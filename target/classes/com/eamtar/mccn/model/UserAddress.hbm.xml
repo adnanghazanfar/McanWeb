@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserAddress" table="user_address"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="addressId">
+			<column name="addressId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="addressDetail">
+			<column name="addressDetail" length="30" />
+		</property>
+		<property name="addressType" type="java.lang.String">
+			<column name="addressType" length="30" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+		<many-to-one name="userProfile" class="com.eamtar.mccn.model.UserProfile"
+			fetch="select">
+			<column name="userId" not-null="true" />
+		</many-to-one>
+		<many-to-one name="location" class="com.eamtar.mccn.model.Location"
+			fetch="join" lazy="false">
+			<column name="locationId" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

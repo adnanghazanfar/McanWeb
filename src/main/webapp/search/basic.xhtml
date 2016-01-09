@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template=".././layout/userLayout.xhtml">
+
+	<f:metadata>
+		<f:event listener="#{searchController.initializeValues()}"
+			type="preRenderView"></f:event>
+	</f:metadata>
+
+	<ui:define name="content">
+
+		<br />
+		<br />
+
+		<h:form id="searchForm">
+			<p:growl id="messagesGrowl" showDetail="true"></p:growl>
+			<p:panel header="Search Criteria" rendered="#{searchBean.intialized}">
+
+				<h:panelGrid columns="4" styleClass="basicSearchBar">
+
+					<p:outputLabel value="First Name:"></p:outputLabel>
+					<p:inputText value="#{searchBean.userDTO.firstName}"></p:inputText>
+
+					<p:outputLabel value="Specialty:" />
+					<p:selectOneMenu id="specialty" effect="fade" filter="true"
+						value="#{searchBean.searchDTO.specialtyId}"
+						filterMatchMode="startsWith" style="height: 27px;width: 190px;">
+						<f:selectItem />
+						<f:selectItems value="#{commonBean.specialtyMap.values()}"
+							var="specialty" itemLabel="#{specialty.name}"
+							itemValue="#{specialty.specialtyId}"></f:selectItems>
+						<f:ajax execute="specialty" event="change"
+							listener="#{searchController.loadSubSpecialties}"
+							render="subSpecialtyPanel" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Last Name:"></p:outputLabel>
+					<p:inputText value="#{searchBean.userDTO.lastName}"></p:inputText>
+
+					<p:outputLabel value="Sub-specialty:" />
+					<h:panelGroup id="subSpecialtyPanel">
+						<p:inputText id="subSpecialtyInputField" maxlength="100"
+							rendered="#{searchBean.subSpecialties == null or (searchBean.subSpecialties.size() == 0)}"
+							value="#{searchBean.searchDTO.customSpecialty}">
+							<f:validateLength minimum="3" maximum="100" />
+						</p:inputText>
+						<p:selectOneMenu id="subSpecialtyDropDown"
+							style="height: 27px;width: 190px;" effect="fade" filter="true"
+							filterMatchMode="startsWith"
+							rendered="#{searchBean.subSpecialties != null and (searchBean.subSpecialties.size() > 0)}"
+							value="#{searchBean.searchDTO.subSpecialtyId}">
+							<f:selectItem></f:selectItem>
+							<f:selectItems value="#{searchBean.subSpecialties}"
+								var="specialty" itemLabel="#{specialty.name}"
+								itemValue="#{specialty.specialtyId}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+
+					<p:outputLabel style="height:20px;"></p:outputLabel>
+					<f:verbatim />
+					<f:verbatim />
+					<f:verbatim />
+
+					<p:outputLabel value="Education:" />
+					<p:selectOneMenu id="education" style="height: 27px;width: 190px;"
+						effect="fade" filter="true" filterMatchMode="startsWith"
+						value="#{searchBean.searchDTO.academicTitle}">
+						<f:selectItem></f:selectItem>
+						<f:selectItems value="#{commonBean.academicTitleList}"
+							var="academicTitle" itemLabel="#{academicTitle}"
+							itemValue="#{academicTitle}" />
+						<f:ajax execute="education" event="change" render="institute" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="Country:" />
+					<p:selectOneMenu id="coutries" style="height: 27px;width: 190px;"
+						effect="fade" filter="true" filterMatchMode="startsWith"
+						value="#{searchBean.searchDTO.countryName}">
+						<f:selectItem></f:selectItem>
+						<f:selectItems value="#{commonBean.countryList}" var="country"
+							itemLabel="#{country}" itemValue="#{country}" />
+						<f:ajax execute="coutries" event="change" render="states" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="University/Institution:" />
+					<h:panelGroup id="institute">
+						<p:inputText
+							rendered="#{searchBean.searchDTO.academicTitle ne 'Medical School'}"
+							id="instituteInputField" maxlength="100"
+							value="#{searchBean.searchDTO.universityInstituteName}">
+							<f:validateLength minimum="3" maximum="100" />
+						</p:inputText>
+						<p:selectOneMenu id="instituteDropDown"
+							style="height: 27px;width: 190px;"
+							rendered="#{searchBean.searchDTO.academicTitle eq 'Medical School'}"
+							effect="fade" filter="true" filterMatchMode="startsWith"
+							value="#{searchBean.searchDTO.universityInstituteName}">
+							<f:selectItem />
+							<f:selectItems value="#{commonBean.topInstitueList}"
+								var="#{institute}" itemLabel="#{institute}"
+								itemValue="#{institute}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+
+					<p:outputLabel value="State/Governate:*" />
+					<h:panelGroup id="states">
+						<p:inputText
+							rendered="#{searchBean.searchDTO.countryName ne 'Egypt'
+									and searchBean.searchDTO.countryName ne 'United States of America'}"
+							id="stateInputField" maxlength="100"
+							value="#{searchBean.searchDTO.stateName}">
+							<f:validateLength minimum="3" maximum="100" />
+						</p:inputText>
+						<p:selectOneMenu id="egyptStateDropDown"
+							style="height: 27px;width: 190px;" effect="fade" filter="true"
+							filterMatchMode="startsWith"
+							rendered="#{searchBean.searchDTO.countryName eq 'Egypt'}"
+							value="#{searchBean.searchDTO.stateName}">
+							<f:selectItem></f:selectItem>
+							<f:selectItems value="#{commonBean.egyptStateList}" var="state"
+								itemLabel="#{state}" itemValue="#{state}" />
+						</p:selectOneMenu>
+						<p:selectOneMenu id="usaStateDropDown"
+							style="height: 27px;width: 190px;" effect="fade" filter="true"
+							filterMatchMode="startsWith"
+							rendered="#{searchBean.searchDTO.countryName eq 'United States of America'}"
+							value="#{searchBean.searchDTO.stateName}">
+							<f:selectItem></f:selectItem>
+							<f:selectItems value="#{commonBean.usaStateList}" var="state"
+								itemLabel="#{state}" itemValue="#{state}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+
+					<p:outputLabel value="Training/Work:" />
+					<p:selectOneMenu id="experienceType"
+						value="#{searchBean.searchDTO.experienceType}"
+						style="height: 27px;width: 190px;" effect="fade" filter="true"
+						filterMatchMode="startsWith">
+						<f:selectItem></f:selectItem>
+						<f:selectItems value="#{commonBean.experienceTypeList}"
+							var="experienceType" itemLabel="#{experienceType}"
+							itemValue="#{experienceType}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="City:"></p:outputLabel>
+					<p:inputText value="#{searchBean.searchDTO.cityName}"></p:inputText>
+
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2" styleClass="basicSearch2Column">
+					<p:outputLabel value="Career Advising Skills:" />
+					<p:selectOneMenu id="skillId" effect="fade" filter="true"
+						value="#{searchBean.searchDTO.skillId}" filterMatchMode="contains"
+						style="height: 27px;width: 290px;">
+						<f:selectItem />
+						<f:selectItems value="#{commonBean.skillsMap.values()}"
+							var="skill" itemLabel="#{skill.title}"
+							itemValue="#{skill.skillId}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<h:panelGrid columns="4" styleClass="basicSearchBar">
+
+					<h:panelGroup style="float:right;margin-right: 40px;height:60px;">
+						<p:commandButton value="Search" style="height:35px;width: 94px;"
+							actionListener="#{searchController.searchUsers}"
+							update="@([id$=usersDataTable],[id$=messages])"></p:commandButton>
+						<p:commandButton value="Refresh" style="height:35px;width: 94px;"
+							action="#{searchController.refreshPage}"></p:commandButton>
+					</h:panelGroup>
+
+				</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+
+
+		<h:form id="userInfoForm">
+			<p:growl id="messages"></p:growl>
+			<p:dataGrid columns="3" rows="12" paginator="true"
+				id="usersDataTable" styleClass="searchResults"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				var="userProfile" value="#{searchBean.users}">
+
+				<f:facet name="header">
+            		#{searchBean.users.size()} Results Found
+        		</f:facet>
+
+				<p:panel id="userDetail" styleClass="userDetail">
+
+					<div id="qv_#{userProfile.user.userId}"
+						style="height: 0px; display: none; position: relative; top: 20px; margin-left: -10px; cursor: pointer !important;">
+
+						<p:commandLink update="@([id$=quickViewProfileDialog])"
+							immediate="true"
+							actionListener="#{searchController.loadQuickViewUserProfile(userProfile.user)}"
+							oncomplete="PF('quickViewProfileDialog').show();">
+							<h:graphicImage id='qv_img_#{userProfile.user.userId}'
+								onmouseover="document.getElementById('qv_#{userProfile.user.userId}').style.display='';"
+								onmouseout="document.getElementById('qv_#{userProfile.user.userId}').style.display='none';"
+								value="../resources/images/quick-view-button.png" />
+						</p:commandLink>
+					</div>
+
+					<h:panelGrid columns="2">
+						<h:panelGrid style="margin-left:10px">
+
+							<h:graphicImage style="height: 80px;width: 65px;"
+								onmouseover="document.getElementById('qv_#{userProfile.user.userId}').style.display='';"
+								onmouseout="document.getElementById('qv_#{userProfile.user.userId}').style.display='none';"
+								value="../resources/images/profile/#{userProfile.user.userProfilePicture}" />
+
+						</h:panelGrid>
+						<h:panelGrid style="text-align:left; margin-left:20px;">
+							<h:outputLabel style="font-weight:bold;"
+								value="#{userProfile.user.firstNameFirst}" />
+							<p:outputLabel
+								value="#{userProfile.description==null?'Not Available':searchController.getLimitedText(userProfile.description)}" />
+							<h:link
+								outcome="/physician/viewUserProfile.xhtml?todo=VCP&amp;userId=#{userProfile.user.userId}"
+								value="view profile">
+								<f:param name="name" value="#{userProfile.user.firstNameFirst}" />
+							</h:link>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+
+		<br />
+
+		<ui:include src="/common/QuickViewProfileDialog.xhtml" />
+		<ui:include src="/common/CommonDialog.xhtml" />
+
+	</ui:define>
+
+</ui:composition>
+
+
+<!-- <p:outputLabel value="Colored Specialty:" /> -->
+<!-- <p:selectOneMenu id="advancedSpecialty" styleClass="dtDropDown" -->
+<!-- 	value="#{searchBean.advancedSpecialty}" converter="specialtyConverter" -->
+<!-- 	effect="fade" var="specialty" style="height: 27px;width: 88%;" -->
+<!-- 	filter="true" filterMatchMode="startsWith"> -->
+<!-- 	<f:selectItem /> -->
+<!-- 	<f:selectItems value="#{commonBean.specialtyMap.values()}" -->
+<!-- 		var="specialty" itemLabel="#{specialty.name}" itemValue="#{specialty}" /> -->
+<!-- 	<f:ajax execute="advancedSpecialty" event="change" -->
+<!-- 		listener="#{searchController.loadSubSpecialties}" -->
+<!-- 		render="subSpecialtyPanel" /> -->
+<!-- 	<p:column> -->
+<!-- 		<h:panelGroup -->
+<!-- 			rendered="#{specialty.specialtyId eq 44 or specialty.specialtyId eq 45 or specialty.specialtyId eq 46}"> -->
+<!-- 			<h:outputText style="color:Red;" value="#{specialty.name}" /> -->
+<!-- 		</h:panelGroup> -->
+<!-- 		<h:panelGroup -->
+<!-- 			rendered="#{specialty.specialtyId ne 44 and specialty.specialtyId ne 45 and specialty.specialtyId ne 46}"> -->
+<!-- 			<h:outputText value="#{specialty.name}" /> -->
+<!-- 		</h:panelGroup> -->
+<!-- 	</p:column> -->
+
+<!-- </p:selectOneMenu> -->

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="UserProfileDialogForm">
+		<p:dialog header="General Information" widgetVar="userProfileDialog"
+			modal="true" resizable="false" height="465" width="615">
+
+			<h:outputLabel style="height:10px;"></h:outputLabel>
+			<h:panelGrid columns="2" cellpadding="2" styleClass="eamtarDialog"
+				id="UserProfileDetail">
+
+				<p:outputLabel value="First Name:*" />
+				<p:inputText label="First Name" id="firstName" maxlength="20"
+					value="#{userBean.user.firstName}" required="true">
+					<f:validateLength minimum="3" maximum="20" />
+				</p:inputText>
+
+				<p:outputLabel value="Last Name:*" />
+				<p:inputText label="Last Name" id="lastName" maxlength="20"
+					value="#{userBean.user.lastName}" required="true">
+					<f:validateLength minimum="3" maximum="20" />
+				</p:inputText>
+
+				<p:outputLabel value="Gender:*" />
+				<p:selectOneRadio id="gender" label="Gender"
+					value="#{userBean.user.gender}">
+					<f:selectItem itemLabel="Male" itemValue="M" />
+					<f:selectItem itemLabel="Female" itemValue="F" />
+				</p:selectOneRadio>
+
+				<p:outputLabel value="Phone:" />
+				<p:inputText id="phone" label="Phone" style="width: 180px;"
+					value="#{userBean.user.contactNumber}" maxlength="15">
+				</p:inputText>
+
+				<p:outputLabel value="Date of Birth:*" />
+				<p:calendar label="Date of Birth" id="dob" navigator="true"
+					yearRange="1950:c" value="#{userBean.user.dob}"
+					pattern="MM/dd/yyyy" title="MM/dd/yyyy">
+					<f:convertDateTime pattern="MM/dd/yyyy" />
+				</p:calendar>
+
+				<!-- <p:outputLabel value="Summary:*" />
+				<p:inputTextarea label="Summary" id="summary" maxlength="100"
+					style="width: 250px;margin-top:10px;"
+					value="#{userProfileBean.selectedUserProfile.userProfile.summary}">
+					<f:validateLength minimum="3" maximum="100" />
+				</p:inputTextarea> -->
+
+				<p:outputLabel value="Biography:*" />
+				<p:inputTextarea label="Biography" id="biography" maxlength="1000"
+					style="width: 280px;height:120px;margin-top:10px;"
+					value="#{userProfileBean.selectedUserProfile.userProfile.description}">
+					<f:validateLength minimum="3" maximum="1000" />
+				</p:inputTextarea>
+
+
+				<f:verbatim />
+				<f:verbatim />
+				<f:verbatim />
+				<p:commandButton style="height:25px;" value="Save" oncomplete="PF('userProfileDialog').hide();"
+					update="@([id$=UserProfilePanel],[id$=messages])"
+					action="#{userProfileController.updateUserProfile}" />
+
+				<p:watermark for="dob" value="MM/dd/yyyy"
+					rendered="#{userBean.user.dob == null}"></p:watermark>
+				<p:watermark for="biography"
+					value="Write few lines about of your Profile"
+					rendered="#{userProfileBean.selectedUserProfile.userProfile.description == null or userProfileBean.selectedUserProfile.userProfile.description == ''}"></p:watermark>
+
+
+			</h:panelGrid>
+
+		</p:dialog>
+	</h:form>
+
+</h:body>
+
+</html>

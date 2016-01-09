@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="./layout/basicLayout.xhtml">
+
+	<ui:define name="content">
+		<c:if
+			test="#{userBean!=null and userBean.email != null and userBean.loggedIn == true}">
+			<script type="text/javascript">
+				window.location.href = "/login.xhtml";
+			</script>
+			<meta http-equiv="Refresh" content="0; URL=/login.xhtml" />
+		</c:if>
+
+		<br />
+
+		<f:event listener="#{userController.resetRegistraionBean}"
+			type="preRenderView" />
+
+		<h:form id="registerationForm">
+
+			<h:panelGrid columns="1"
+				style="width:650px;margin-left: auto;margin-right: auto;">
+				
+				<p:growl infoClass="info" errorClass="error" showSummary="true"
+					id="messages">
+					<p:effect type="pulsate" event="load" delay="1000">
+						<f:param name="mode" value="'show'" />
+					</p:effect>
+				</p:growl>
+
+
+				<p:fieldset legend="Sign Up to MCAN">
+
+					<h:panelGrid columns="1" styleClass="eamtarRegistration">
+						<h:outputLabel styleClass="oH1Huge" value="Create a new profile"></h:outputLabel>
+						<h:outputLabel
+							value="Register As Physician on Medical Career Advising Network"></h:outputLabel>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1" styleClass="eamtarRegistration"
+						id="giTable">
+
+
+
+						<h:panelGroup>
+							<p:inputText label="First Name" id="firstname" maxlength="20"
+								style="width:140px;" value="#{registrationBean.user.firstName}"
+								required="true">
+								<f:validateLength minimum="3" maximum="20" />
+							</p:inputText>
+
+
+							<p:inputText label="Last Name" id="lastname" maxlength="20"
+								style="width:140px;" value="#{registrationBean.user.lastName}"
+								required="true">
+								<f:validateLength minimum="3" maximum="20" />
+							</p:inputText>
+						</h:panelGroup>
+
+						<p:inputText label="Email Address" id="email" maxlength="40"
+							validator="#{userController.emailDuplicationValidate}"
+							value="#{registrationBean.user.emailAddress}" required="true">
+							<f:validator validatorId="emailValidator"></f:validator>
+							<f:ajax event="change" execute="email" render="messages" />
+						</p:inputText>
+
+						<!-- <p:outputLabel value="Gender:*" />
+						<p:selectOneRadio id="console"
+							value="#{registrationBean.user.gender}">
+							<f:selectItem itemLabel="Male" itemValue="M" />
+							<f:selectItem itemLabel="Female" itemValue="F" />
+						</p:selectOneRadio>
+
+						<p:outputLabel value="Phone:*" />
+						<p:inputMask id="phone" label="Phone" style="width: 180px;"
+							value="#{registrationBean.user.contactNumber}" styleClass="cnic"
+							mask="(+99) 999-9999999" required="true" maxlength="15" />
+
+						<p:outputLabel value="Date of Birth:*" />
+						<p:calendar label="Date of Birth" id="birthDate" navigator="true" yearRange="c-80:c-10"
+							value="#{registrationBean.user.dob}" pattern="dd/MM/yyyy"
+							title="dd/MM/yyyy" required="true">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:calendar>  -->
+
+
+						<p:password label="Password" id="password"
+							validatorMessage="Password should be a combination of numbers and letters and a minimum of 8 characters."
+							value="#{registrationBean.user.password}" required="true">
+							<f:validateLength minimum="8" maximum="20" />
+							<f:validateRegex pattern=".*\d.*" />
+						</p:password>
+
+
+						<p:password label="Confirm Password" id="cPassword"
+							value="#{registrationBean.user.cPassword}" required="true">
+							<f:validateLength minimum="8" maximum="20" />
+						</p:password>
+
+						<!-- <p:outputLabel value="Summary:*" />
+						<p:inputTextarea label="Summary" id="editSummary" maxlength="100"
+							style="width: 300px;margin-top:4px;"
+							value="#{registrationBean.userProfile.summary}" required="true">
+							<f:validateLength minimum="10" maximum="100" />
+						</p:inputTextarea>
+
+						<p:outputLabel value="Description:*" />
+						<p:inputTextarea label="Description" id="editDescription"
+							maxlength="300"
+							style="width: 300px;height:100px;margin-top:6px;"
+							value="#{registrationBean.userProfile.description}"
+							required="true">
+							<f:validateLength minimum="20" maximum="300" />
+						</p:inputTextarea>
+						
+						<p:watermark value="dd/MM/yyyy" for="birthDate"></p:watermark>
+						 -->
+
+						<p:commandButton value="Get Started" style="margin:0;"
+							ajax="false" action="#{userController.addConfirmedUser}" />
+
+						<p:watermark value="Email Address" for="email" />
+						<p:watermark value="First Name" for="firstname" />
+						<p:watermark value="Last Name" for="lastname" />
+						<p:watermark value="Password:" for="password" />
+						<p:watermark value="Confirm Password" for="cPassword" />
+
+
+
+					</h:panelGrid>
+				</p:fieldset>
+
+
+
+			</h:panelGrid>
+
+		</h:form>
+		<br />
+
+	</ui:define>
+
+</ui:composition>

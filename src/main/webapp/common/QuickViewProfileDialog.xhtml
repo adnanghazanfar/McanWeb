@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<p:dialog widgetVar="quickViewProfileDialog"
+		id="quickViewProfileDialog" modal="true" resizable="false"
+		height="415" width="685">
+		<h:form id="QuickViewProfileDialogForm">
+
+			<h:panelGrid styleClass="quickViewHeader" columns="2"
+				style="width: 620px;margin-top:20px;">
+				<h:outputLabel styleClass="oH1Huge"
+					value="#{searchBean.userProfileDTO.userProfile.user.firstNameFirst}" />
+
+				<h:panelGrid columns="1" style="float:right;margin-right:20px;"
+					rendered="#{searchBean.userProfileDTO.userProfile != null}">
+					<p:rating
+						value="#{searchBean.userProfileDTO.userProfile.profileRating}"
+						readonly="true" />
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="2" style="border:2px">
+				<h:panelGrid
+					rendered="#{searchBean.userProfileDTO.userProfile != null}"
+					styleClass="quickViewHeader">
+					<h2 class="oH2High oContractorInfoTitle">Biography</h2>
+					<p:outputLabel
+						style="width:490px;text-align: justify;font-size: 1.05em;"
+						value="#{searchBean.userProfileDTO.userProfile.description==null?'Not Available':searchBean.userProfileDTO.userProfile.description}"></p:outputLabel>
+				</h:panelGrid>
+
+				<p:graphicImage
+					rendered="#{searchBean.userProfileDTO.userProfile.user.userProfilePicture !=null}"
+					value="../resources/images/profile/#{searchBean.userProfileDTO.userProfile.user.userProfilePicture}"
+					style="width:80px;height:100px;margin-top: 20px;" />
+			</h:panelGrid>
+
+			<br />
+			<h:panelGrid columns="1" styleClass="quickViewHeader">
+				<h2 class="oH2High oContractorInfoTitle">Career Advicing Skills</h2>
+
+				<h:dataTable value="#{searchBean.userProfileDTO.userSkills}"
+					style="border:none;" var="userSkill" columns="1"
+					styleClass="userSkills">
+					<h:column>
+						<p:outputLabel style="width:550px;text-align:left;"
+							value="* #{userSkill.skill.title  eq 'Other'? userSkill.customSkill:userSkill.skill.title}" />
+					</h:column>
+				</h:dataTable>
+				<p:outputLabel
+					rendered="#{(searchBean.userProfileDTO.userSkills==null or searchBean.userProfileDTO.userSkills.size()==0)}"
+					value="Not Available">
+					</p:outputLabel>
+			</h:panelGrid>
+
+			<br />
+			<h:panelGrid columns="1" style="float:right;margin-right:20px;">
+				<p:outputLabel
+					value="Member Since : #{userProfileController.convertToDate(searchBean.userProfileDTO.userProfile.user.createdDate)}" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+		<p:graphicImage value="#{resource['images:loader-square.gif']}" />
+	</p:dialog>
+
+
+</h:body>
+
+</html>

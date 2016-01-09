@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserClinicalQualification" table="user_clinical_qualification"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="clinicalQualificationId">
+			<column name="clinicalQualificationId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="customSpecialty">
+			<column name="customSpecialty" length="100" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+		<many-to-one name="userProfile" class="com.eamtar.mccn.model.UserProfile"
+			fetch="select">
+			<column name="userId" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="specialty" class="com.eamtar.mccn.model.Specialty"
+			fetch="select" lazy="false">
+			<column name="specialtyId" not-null="true" />
+		</many-to-one>
+		<many-to-one name="subSpecialty" class="com.eamtar.mccn.model.Specialty"
+			fetch="select" lazy="false">
+			<column name="subSpecialtyId" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

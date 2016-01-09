@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.Specialty" table="specialty"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="specialtyId">
+			<column name="specialtyId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="name">
+			<column name="name" length="200" />
+		</property>
+		<property type="java.lang.Integer" name="parentId">
+			<column name="parentId" length="100" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="22" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="22" />
+		</property>
+	</class>
+</hibernate-mapping>

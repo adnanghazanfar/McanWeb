@@ -1,0 +1,436 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template=".././layout/physicianLayout.xhtml">
+
+	<ui:define name="right_content">
+
+		<f:event listener="#{userProfileController.initValues}"
+			type="preRenderView" />
+
+		<p:growl infoClass="info" errorClass="error" showSummary="true"
+			id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:growl>
+		
+		<p:fieldset legend="Physician Information" id="UserProfilePanel">
+
+			<h:panelGrid styleClass="userInfo" style="width:620px;" columns="2">
+				<h:outputLabel styleClass="oH1Huge"
+					value="#{userBean.user.firstName} #{userBean.user.lastName}" />
+
+				<h:panelGrid
+					rendered="#{userProfileBean.selectedUserProfile.userProfile != null}">
+					<p:commandButton value="Edit your Profile" icon="ui-icon-pencil"
+						type="button" onclick="PF('userProfileDialog').show();"
+						title="Edit you Profile">
+					</p:commandButton>
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid
+				rendered="#{userProfileBean.selectedUserProfile.userProfile != null}"
+				styleClass="userHeader">
+				<!-- <h2 class="oH2High oContractorInfoTitle">#{userProfileBean.selectedUserProfile.userProfile.summary}</h2>
+				<br /> -->
+				<p:outputLabel style="text-align: justify;font-size: 1.05em;"
+					value="#{userProfileBean.selectedUserProfile.userProfile.description}"></p:outputLabel>
+			</h:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="2" style="border:2px">
+				<h:panelGroup>
+
+					<h:panelGrid columns="2" styleClass="userInfo">
+						<p:outputLabel value="Email:" />
+						<p:outputLabel value="#{userBean.user.emailAddress}" />
+
+						<p:outputLabel value="First Name:" />
+						<p:outputLabel value="#{userBean.user.firstName}" />
+
+						<p:outputLabel value="Last Name:" />
+						<p:outputLabel value="#{userBean.user.lastName}" />
+
+						<p:outputLabel value="Gender" />
+						<p:outputLabel rendered="#{userBean.user.gender!=null}"
+							value="#{userBean.user.gender eq 'M' ? 'Male':'Female'}" />
+						<p:outputLabel rendered="#{userBean.user.gender==null}"
+							value="Not Specified" />	
+
+						<p:outputLabel value="Phone:" />
+						<p:outputLabel value="#{userBean.user.contactNumber}" />
+
+						<p:outputLabel value="Date of Birth:" />
+						<p:outputLabel
+							value="#{userProfileController.convertToDate(userBean.user.dob)}" />
+
+						<br />
+
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:panelGrid>
+					<p:graphicImage
+						value="../resources/images/profile/#{userBean.user.userProfilePicture}?#{userBean.currentTimeInMilli}"
+						styleClass="profilePicture">
+						<p:commandButton icon="ui-icon-pencil" type="button"
+							style="margin-left: 95px;margin-top: -25px;"
+							onclick="PF('profilePictureDialog').show();" title="Change">
+						</p:commandButton>
+					</p:graphicImage>
+				</h:panelGrid>
+			</h:panelGrid>
+
+		</p:fieldset>
+
+		<h:form id="clinicalQualificationForm">
+			<p:dataGrid
+				value="#{userProfileBean.selectedUserProfile.userClinicalQualifications}"
+				var="userClinicalQualification" id="ClinicalQualificationPanel"
+				styleClass="userSpecialties" rowIndexVar="rowIndex" columns="3">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2" styleClass="eamtarGridHeader">
+						<p:outputLabel value="Clinical Specialty or Medical Student"></p:outputLabel>
+						<p:commandButton icon="ui-icon-plus" value="Add"
+							update="@([id$=clinicalQualificationDialog])"
+							oncomplete="PF('clinicalQualificationDialog').show()"
+							title="Add">
+							<f:setPropertyActionListener value="#{null}"
+								target="#{userProfileBean.newSelectedUserClinicalQualification}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</f:facet>
+
+				<p:panel header="#{userClinicalQualification.specialty.name}"
+					style="width:210px;text-align:left">
+
+					<h:panelGrid columns="1" style="height:30px;">
+
+						<f:facet name="footer">
+							<h:panelGrid columns="2" style="width: 200px;">
+								<p:outputLabel
+									rendered="#{userClinicalQualification.subSpecialty == null and (userClinicalQualification.customSpecialty == null or userClinicalQualification.customSpecialty == '')}"
+									value="No Sub-Specialty" />
+								<p:outputLabel
+									rendered="#{userClinicalQualification.subSpecialty != null}"
+									value="#{userClinicalQualification.subSpecialty.name}" />
+								<p:outputLabel
+									rendered="#{userClinicalQualification.subSpecialty == null and (userClinicalQualification.customSpecialty != null and userClinicalQualification.customSpecialty != '')}"
+									value="#{userClinicalQualification.customSpecialty}" />
+
+								<p:commandLink styleClass="ui-icon ui-icon-trash" title="Delete"
+									style="margin-right:2px;"
+									update="ClinicalQualificationPanel :messages"
+									actionListener="#{userProfileController.deleteUserClinicalQualification(userClinicalQualification)}">
+									<p:confirm header="Confirmation"
+										message="Are you sure, You want to delete this Record?"
+										icon="ui-icon-alert" />
+								</p:commandLink>
+							</h:panelGrid>
+						</f:facet>
+
+						<!-- <f:facet name="footer">
+							<h:outputLabel style="height:10px;"></h:outputLabel>
+							<h:panelGroup style="align:center;">
+								<p:commandButton update="@([id$=clinicalQualificationDialog])"
+									icon="ui-icon-pencil"
+									oncomplete="PF('clinicalQualificationDialog').show()"
+									title="View Detail">
+									<f:setPropertyActionListener value="#{userClinicalQualification}"
+										target="#{userProfileBean.selectedClinicalQualification}" />
+								</p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Delete"
+									update="ClinicalQualificationPanel :messages"
+									actionListener="#{userProfileController.deleteClinicalQualification(userClinicalQualification)}">
+									<p:confirm header="Confirmation"
+										message="Are you sure, You want to delete this Record?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</h:panelGroup>
+						</f:facet> -->
+
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+
+		<h:form id="academicForm">
+			<p:dataGrid var="userAcademic" id="AcademicPanel"
+				update="@([id$=userProfileDialog])"
+				value="#{userProfileBean.selectedUserProfile.userAcademics}"
+				columns="1">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2" styleClass="eamtarGridHeader">
+						<p:outputLabel value="Academic Qualification"></p:outputLabel>
+						<p:commandButton icon="ui-icon-plus" value="Add"
+							update="@([id$=academicDialog])"
+							oncomplete="PF('academicDialog').show()" title="Add">
+							<f:setPropertyActionListener value="#{null}"
+								target="#{userProfileBean.newSelectedUserAcademic}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</f:facet>
+
+				<p:panel style="text-align:left">
+
+					<h:panelGrid columns="2" styleClass="oneRowDataGridPanel">
+
+						<f:facet name="header">
+							<p:outputLabel style="font-size:14px;font-weight:bold;"
+								value="#{userAcademic.academicTitle}" />
+						</f:facet>
+
+						<p:outputLabel style="font-weight:bold;width:175px;"
+							value="University/Institution/Exam/ : " />
+						<p:outputLabel value="#{userAcademic.instituteName}" />
+
+						<p:outputLabel style="font-weight:bold;width:175px;"
+							value="Year of Completion  : " />
+						<p:outputLabel value="#{userAcademic.yearCompleted}" />
+
+						<f:facet name="footer">
+							<p:outputLabel value="#{userAcademic.academicDescription}" />
+						</f:facet>
+
+						<f:facet name="footer">
+							<h:outputLabel style="height:10px;"></h:outputLabel>
+							<h:panelGroup style="align:center">
+								<p:commandButton update="@([id$=academicDialog])"
+									icon="ui-icon-pencil" oncomplete="PF('academicDialog').show()"
+									title="View Detail">
+									<f:setPropertyActionListener value="#{userAcademic}"
+										target="#{userProfileBean.selectedUserAcademic}" />
+								</p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Delete"
+									update="AcademicPanel :messages"
+									actionListener="#{userProfileController.deleteUserAcademic(userAcademic)}">
+									<p:confirm header="Confirmation"
+										message="Are you sure, You want to delete this Record?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</h:panelGroup>
+						</f:facet>
+
+					</h:panelGrid>
+
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+
+		<h:form id="experienceForm">
+			<p:dataGrid var="userExperience" id="UserExperiencePanel"
+				value="#{userProfileBean.selectedUserProfile.userExperiences}"
+				columns="1">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2" styleClass="eamtarGridHeader">
+						<p:outputLabel value="Training and Working Experience"></p:outputLabel>
+						<p:commandButton icon="ui-icon-plus" value="Add"
+							update="@([id$=experienceDialog])"
+							oncomplete="PF('experienceDialog').show()" title="Add">
+							<f:setPropertyActionListener value="#{null}"
+								target="#{userProfileBean.newSelectedUserExperience}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</f:facet>
+
+				<p:panel style="text-align:left">
+					<h:panelGrid columns="2" styleClass="oneRowDataGridPanel">
+
+						<f:facet name="header">
+							<p:outputLabel style="font-size:14px;font-weight:bold;"
+								value="#{userExperience.experienceType}" />
+						</f:facet>
+
+						<p:outputLabel style="font-weight:bold;"
+							value="Institution/Company : " />
+						<p:outputLabel value="#{userExperience.workPlace}" />
+
+						<p:outputLabel style="font-weight:bold;" value="Duration : " />
+						<h:panelGroup>
+							<h:outputText
+								value="#{userExperience.fromMonth}-#{userExperience.fromYear}" />
+							<h:outputText rendered="#{!userExperience.isCurrent}"
+								value=" to #{userExperience.toMonth}-#{userExperience.toYear}"></h:outputText>
+							<h:outputText rendered="#{userExperience.isCurrent}"
+								value=" to Present"></h:outputText>
+						</h:panelGroup>
+
+						<f:facet name="footer">
+							<p:outputLabel style="font-weight:bold;"
+								value="More details about this position : " />
+							<p:outputLabel value="#{userExperience.description}" />
+						</f:facet>
+
+						<f:facet name="footer">
+							<h:outputLabel style="height:10px;"></h:outputLabel>
+							<h:panelGroup style="width:100%;align:right;">
+								<p:commandButton update="@([id$=experienceDialog])"
+									icon="ui-icon-pencil"
+									oncomplete="PF('experienceDialog').show()" title="View Detail">
+									<f:setPropertyActionListener value="#{userExperience}"
+										target="#{userProfileBean.selectedUserExperience}" />
+								</p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Delete"
+									update="UserExperiencePanel :messages"
+									actionListener="#{userProfileController.deleteUserExperience(userExperience)}">
+									<p:confirm header="Confirmation"
+										message="Are you sure, You want to delete this Record?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</h:panelGroup>
+						</f:facet>
+
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+
+
+		<h:form id="skillForm">
+			<p:dataGrid value="#{userProfileBean.selectedUserProfile.userSkills}"
+				var="userSkill" columns="3" rowIndexVar="rowIndex"
+				id="UserSkillPanel" styleClass="userSkills">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2" styleClass="eamtarGridHeader">
+						<p:outputLabel value="Can provide career advice in these areas"></p:outputLabel>
+						<p:commandButton icon="ui-icon-plus" value="Add"
+							update="@([id$=skillDialog])"
+							oncomplete="PF('skillDialog').show()" title="Add">
+							<f:setPropertyActionListener value="#{null}"
+								target="#{userProfileBean.newSelectedUserSkill}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</f:facet>
+
+				<p:panel style="width:210px;text-align:left">
+
+					<f:facet name="header">
+							Skill# #{rowIndex+1} 							
+					</f:facet>
+
+					<h:panelGrid columns="1" style="height:100px;">
+
+						<p:outputLabel
+							value="#{userSkill.skill.title  eq 'Other'? userSkill.customSkill:userSkill.skill.title}" />
+
+						<h:panelGrid columns="2" style="width: 200px;">
+							<p:rating value="#{userSkill.rating}" readonly="true"></p:rating>
+							<p:commandLink styleClass="ui-icon ui-icon-trash" title="Delete"
+								style="margin-right:2px;" update="UserSkillPanel :messages"
+								actionListener="#{userProfileController.deleteUserSkill(userSkill)}">
+								<p:confirm header="Confirmation"
+									message="Are you sure, You want to delete this Record?"
+									icon="ui-icon-alert" />
+							</p:commandLink>
+
+						</h:panelGrid>
+						<!-- <h:panelGroup style="width:100%;align:right;">
+						 <p:commandButton update="@([id$=skillDialog])"
+								icon="ui-icon-pencil" oncomplete="PF('skillDialog').show()"
+								title="View Detail">
+								<f:setPropertyActionListener value="#{userSkill}"
+									target="#{userProfileBean.selectedUserSkill}" />
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-trash" title="Delete"
+								update="UserSkillPanel :messages"
+								actionListener="#{userProfileController.deleteUserSkill(userSkill)}">
+								<p:confirm header="Confirmation"
+									message="Are you sure, You want to delete this Record?"
+									icon="ui-icon-alert" />
+							</p:commandButton> 
+						</h:panelGroup> -->
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+		</h:form>
+
+		<h:form id="addressForm">
+			<p:dataGrid columns="1" style="width:100%;" value="1"
+				id="AddressPanel">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2" styleClass="eamtarGridHeader">
+						<p:outputLabel value="Places you have lived or worked in"></p:outputLabel>
+						<p:commandButton icon="ui-icon-plus" value="Add"
+							update="@([id$=addressDialog])"
+							oncomplete="PF('addressDialog').show()" title="Add">
+							<f:setPropertyActionListener value="#{null}"
+								target="#{userProfileBean.newSelectedUserAddress}" />
+						</p:commandButton>
+					</h:panelGrid>
+				</f:facet>
+
+				<p:dataTable id="addresses" var="userAddress" rowIndexVar="rowIndex"
+					rowStyleClass="#{userAddress.addressType eq 'Permanent' ? 'old' : null}"
+					value="#{userProfileBean.selectedUserProfile.userAddresses}">
+
+					<p:column headerText="#" style="width:2%">
+						<p:outputLabel value="#{rowIndex+1}" />
+						<p:tooltip value="#{userAddress.addressType} Address"
+							showEffect="clip" hideEffect="explode" trackMouse="true"
+							rendered="#{userAddress.addressType eq 'Permanent'}"
+							for="@([id$=addresses] tr[role=row][data-ri=#{rowIndex}])" />
+					</p:column>
+
+					<p:column headerText="City" style="width:28%">
+						<p:outputLabel value="#{userAddress.location.cityName}" />
+					</p:column>
+
+					<p:column headerText="State/Governate" style="width:20%">
+						<p:outputLabel value="#{userAddress.location.stateName}" />
+					</p:column>
+
+					<p:column headerText="Country" style="width:25%">
+						<p:outputLabel value="#{userAddress.location.countryName}" />
+					</p:column>
+
+					<p:column headerText="Type" style="width:15%">
+						<p:outputLabel value="#{userAddress.addressType}" />
+					</p:column>
+
+					<p:column headerText="Action" style="width:10%;padding: 4px 5px;">
+						<p:commandButton icon="ui-icon-pencil" title="Edit"
+							update="@([id$=addressDialog])"
+							oncomplete="PF('addressDialog').show()">
+							<f:setPropertyActionListener value="#{userAddress}"
+								target="#{userProfileBean.selectedUserAddress}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-trash" title="Delete"
+							update="@([id$=AddressPanel]) :messages"
+							actionListener="#{userProfileController.deleteUserAddress(userAddress)}">
+							<p:confirm header="Confirmation"
+								message="Are you sure, You want to delete this Record?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:dataGrid>
+		</h:form>
+
+
+
+		<!-- DIALOGS USED FOR ADDITION AND UPDATION AND DELETION OF DATA -->
+
+
+		<ui:include src="/common/UserProfileDialogs.xhtml" />
+
+		<br />
+	</ui:define>
+
+</ui:composition>

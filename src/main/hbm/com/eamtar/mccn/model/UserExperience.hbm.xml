@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserExperience" table="user_experience"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="experienceId">
+			<column name="experienceId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="experienceType">
+			<column name="experienceType" length="100" />
+		</property>
+		<property type="java.lang.String" name="description">
+			<column name="description" length="2000" />
+		</property>
+		<property type="java.lang.String" name="workPlace">
+			<column name="workPlace" length="100" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+		<property name="isCurrent" type="java.lang.Boolean">
+			<column name="isCurrent" length="2" />
+		</property>
+		<property type="java.lang.String" name="fromMonth">
+			<column name="fromMonth" length="10" />
+		</property>
+		<property type="java.lang.Integer" name="fromYear">
+			<column name="fromYear" length="10" />
+		</property>
+		<property type="java.lang.String" name="toMonth">
+			<column name="toMonth" length="10" />
+		</property>
+		<property type="java.lang.Integer" name="toYear">
+			<column name="toYear" length="10" />
+		</property>
+		<many-to-one name="userProfile" class="com.eamtar.mccn.model.UserProfile"
+			fetch="select">
+			<column name="userId" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

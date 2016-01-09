@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template=".././layout/physicianLayout.xhtml">
+
+	<ui:define name="right_content">
+
+		<f:event listener="#{userProfileController.initValues}"
+			type="preRenderView" />
+
+		<p:fieldset legend="Physician Information">
+
+			<h:panelGrid styleClass="userInfo" columns="2" style="width: 615px;">
+				<h:outputLabel styleClass="oH1Huge"
+					value="#{userBean.user.firstName} #{userBean.user.lastName}" />
+
+			</h:panelGrid>
+
+			<h:panelGrid
+				rendered="#{userProfileBean.selectedUserProfile.userProfile != null}"
+				styleClass="userHeader">
+				<!-- <h2 class="oH2High oContractorInfoTitle">#{userProfileBean.selectedUserProfile.userProfile.summary}</h2>
+				<br /> -->
+				<p:outputLabel style="text-align: justify;font-size: 1.05em;"
+					value="#{userProfileBean.selectedUserProfile.userProfile.description}"></p:outputLabel>
+			</h:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="2" style="border:2px">
+				<h:panelGroup>
+
+					<h:panelGrid columns="2" styleClass="userInfo">
+						<p:outputLabel value="Email:" />
+						<p:outputLabel value="#{userBean.user.emailAddress}" />
+
+						<p:outputLabel value="First Name:" />
+						<p:outputLabel value="#{userBean.user.firstName}" />
+
+						<p:outputLabel value="Last Name:" />
+						<p:outputLabel value="#{userBean.user.lastName}" />
+
+						<p:outputLabel value="Phone:" />
+						<p:outputLabel value="#{userBean.user.contactNumber}" />
+
+						<p:outputLabel value="Member Since:" />
+						<p:outputLabel
+							value="#{userProfileController.convertToDate(userBean.user.createdDate)}" />
+
+						<p:outputLabel value="Profile Updated:" />
+						<p:outputLabel
+							value="#{userProfileController.convertToDate(userBean.user.modifiedDate)}" />
+
+						<br />
+
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:graphicImage
+						value="../resources/images/profile/#{userBean.user.userProfilePicture}"
+						styleClass="profilePicture" />
+					<p:rating style="margin-left:15px;"
+						rendered="#{userProfileBean.selectedUserProfile.userProfile != null}"
+						value="#{userProfileBean.selectedUserProfile.userProfile.profileRating}"
+						readonly="true" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="float:right;margin-right:20px;">
+				<h:link value="Edit your Profile"
+					style="text-align:left;font-weight:bold;"
+					outcome="/physician/editProfile.xhtml"></h:link>
+			</h:panelGrid>
+
+
+		</p:fieldset>
+
+		<p:dataGrid
+			value="#{userProfileBean.selectedUserProfile.userClinicalQualifications}"
+			var="userClinicalQualification" rowIndexVar="rowIndex" columns="3"
+			styleClass="userSpecialties">
+
+			<f:facet name="header">
+				Clinical Specialty or Medical Student
+        	</f:facet>
+
+			<p:panel header="#{userClinicalQualification.specialty.name}"
+				style="width:210px;text-align:left">
+
+				<h:panelGrid columns="1" style="height:30px;">
+
+					<f:facet name="footer">
+						<p:outputLabel
+							rendered="#{userClinicalQualification.subSpecialty == null and (userClinicalQualification.customSpecialty == null or userClinicalQualification.customSpecialty == '')}"
+							value="No Sub-Specialty" />
+						<p:outputLabel
+							rendered="#{userClinicalQualification.subSpecialty != null}"
+							value="#{userClinicalQualification.subSpecialty.name}" />
+						<p:outputLabel
+							rendered="#{userClinicalQualification.subSpecialty == null and (userClinicalQualification.customSpecialty != null and userClinicalQualification.customSpecialty != '')}"
+							value="#{userClinicalQualification.customSpecialty}" />
+					</f:facet>
+
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+
+		<br />
+
+
+		<p:dataGrid var="userAcademic" id="userAcademicDataGrid"
+			value="#{userProfileBean.selectedUserProfile.userAcademics}"
+			columns="1">
+
+			<f:facet name="header">
+            	Academic Qualification
+        	</f:facet>
+
+			<p:panel style="text-align:left" id="academicQualificationPanel">
+				<h:panelGrid id="firstPartPanel" columns="2"
+					styleClass="profileOneRowPanel">
+
+					<f:facet name="header">
+						<p:outputLabel style="font-size:14px;font-weight:bold;"
+							value="#{userAcademic.academicTitle}" />
+					</f:facet>
+
+					<p:outputLabel value="#{userAcademic.instituteName}" />
+					<h:outputLabel id="toggleBtn" value="More" style="color:red;"
+						onclick="togglePanel(this);" />
+				</h:panelGrid>
+
+				<h:panelGrid id="secondPartPanel" columns="1" style="display:none;">
+					<p:outputLabel value="Completed in #{userAcademic.yearCompleted}" />
+					<p:outputLabel style="font-weight:bold;text-decoration: underline;"
+						rendered="#{userAcademic.academicDescription != null and userAcademic.academicDescription ne ''}"
+						value="More details about this Degree , exam or scholarship : " />
+					<p:outputLabel value="#{userAcademic.academicDescription}"
+						rendered="#{userAcademic.academicDescription != null and userAcademic.academicDescription ne ''}" />
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+		<br />
+
+		<p:dataGrid var="userExperience" id="userExperiences"
+			value="#{userProfileBean.selectedUserProfile.userExperiences}"
+			columns="1">
+
+			<f:facet name="header">
+            	Training and Work Experience
+        	</f:facet>
+
+			<p:panel style="text-align:left" id="experiencePanel">
+				<h:panelGrid id="firstPartPanel" columns="2"
+					styleClass="profileOneRowPanel">
+
+					<f:facet name="header">
+						<p:outputLabel style="font-size:14px;font-weight:bold;"
+							value="#{userExperience.experienceType}" />
+					</f:facet>
+
+					<p:outputLabel value="#{userExperience.workPlace}" />
+					<h:outputLabel id="toggleBtn" value="More" style="color:red;"
+						onclick="togglePanel(this);" />
+
+				</h:panelGrid>
+
+				<h:panelGrid id="secondPartPanel" columns="1" style="display:none;">
+					<h:panelGrid columns="2">
+						<p:outputLabel style="margin-left:-2px;"
+							value="Duration #{userExperience.fromMonth}-#{userExperience.fromYear}" />
+						<p:outputLabel rendered="#{!userExperience.isCurrent}"
+							value=" to #{userExperience.toMonth}-#{userExperience.toYear}"></p:outputLabel>
+						<p:outputLabel rendered="#{userExperience.isCurrent}"
+							value=" to Present"></p:outputLabel>
+					</h:panelGrid>
+					<p:outputLabel style="font-weight:bold;text-decoration: underline;"
+						value="More details about this position : " />
+					<p:outputLabel value="#{userExperience.description}" />
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+		<br />
+
+		<p:dataGrid value="#{userProfileBean.selectedUserProfile.userSkills}"
+			var="userSkill" rowIndexVar="rowIndex" columns="3"
+			styleClass="userSkills">
+
+			<f:facet name="header">
+            	Can provide career advice in these areas
+        	</f:facet>
+
+			<p:panel header="Skill # #{rowIndex+1}"
+				style="width:210px;text-align:left">
+				<h:panelGrid columns="1" style="height:90px;">
+
+					<p:outputLabel
+						value="#{userSkill.skill.title  eq 'Other'? userSkill.customSkill:userSkill.skill.title}" />
+
+					<h:panelGrid columns="2" style=" width: 210px;">
+						<p:rating value="#{userSkill.rating}" readonly="true"></p:rating>
+						<p:outputLabel style="font-weight:bold;"
+							value="#{userSkill.noOfYears} Years" />
+					</h:panelGrid>
+
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+		<br />
+
+		<p:dataTable id="addresses" var="address" rowIndexVar="rowIndex"
+			value="#{userProfileBean.selectedUserProfile.userAddresses}">
+
+			<f:facet name="header">  
+            	Places you have lived or worked in 
+        	</f:facet>
+
+			<p:column headerText="#" style="width:2%">
+				<p:outputLabel value="#{rowIndex+1}" />
+			</p:column>
+
+			<p:column headerText="City" style="width:35%">
+				<p:outputLabel value="#{address.location.cityName}" />
+			</p:column>
+
+			<p:column headerText="State/Governate" style="width:20%">
+				<p:outputLabel value="#{address.location.stateName}" />
+			</p:column>
+
+			<p:column headerText="Country" style="width:25%">
+				<p:outputLabel value="#{address.location.countryName}" />
+			</p:column>
+
+			<p:column headerText="Type" style="width:18%">
+				<p:outputLabel value="#{address.addressType}" />
+			</p:column>
+
+		</p:dataTable>
+		<br />
+
+	</ui:define>
+
+</ui:composition>

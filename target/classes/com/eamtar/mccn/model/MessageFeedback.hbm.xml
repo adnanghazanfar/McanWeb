@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.MessageFeedback" table="message_feedback"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="messageId">
+			<column name="messageId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="name">
+			<column name="name" length="100" />
+		</property>
+		<property type="java.lang.String" name="email">
+			<column name="email" length="100" />
+		</property>
+		<property type="java.lang.String" name="subject">
+			<column name="subject" length="100" />
+		</property>
+		<property type="java.lang.String" name="messageBody">
+			<column name="messageBody" length="1000" />
+		</property>
+		<property type="java.util.Date" name="sentTime">
+			<column name="sentTime" length="12" />
+		</property>
+	</class>
+</hibernate-mapping>

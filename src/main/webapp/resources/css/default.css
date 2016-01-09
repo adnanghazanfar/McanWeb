@@ -1,0 +1,816 @@
+/*
+Overload Primefaces
+Auther: Adnan Ghazanfar
+Pakistan
+*/
+.ui-datagrid-column {
+	padding: 2px;
+	vertical-align: top;
+}
+
+.ui-widget-content {
+	border: 1px solid #a6c9e2;
+}
+
+.ui-button-text-only .ui-button-text {
+    font-weight: bold;
+}
+
+.ui-widget {
+	font-size: 12px;
+}
+
+.ui-breadcrumb ul li .ui-menuitem-link {
+	display: block;
+	float: left;
+	margin-top: 0px;
+	overflow: hidden;
+	position: relative;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+	margin-left: -0.6em;
+	top: 0em;
+}
+
+.ui-datatable th div.ui-dt-c,.ui-datatable .ui-datatable-data td div.ui-dt-c,.ui-datatable .ui-datatable-data-empty td div.ui-dt-c,.ui-datatable tfoot td div.ui-dt-c
+	{
+	padding: 3px 3px;
+}
+
+.ui-selectonemenu label.ui-selectonemenu-label {
+	cursor: pointer;
+	line-height: 20px;
+}
+
+.ui-widget-header .ui-inputfield,.ui-widget-content .ui-inputfield {
+	font-weight: normal;
+	line-height: 20px;
+	width: 188px;
+}
+
+.ui-selectmanycheckbox label,.ui-selectoneradio label {
+	display: block;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-top: 4px;
+	width: 45px;
+}
+
+.userSpecialties .ui-datagrid-data {
+	width: 0;
+}
+
+.userSkills .ui-datagrid-data {
+	width: 0;
+}
+
+.ui-widget-header {
+	text-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
+}
+
+.ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited
+	{
+	text-shadow: 0 0 0 rgba(255, 255, 255, 0.8);
+}
+
+.ui-datatable thead th,.ui-datatable tbody td,.ui-datatable tfoot td {
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	padding: 5px 10px;
+}
+
+.dtDropDown{
+	width:190px;
+}
+
+/*
+
+Normal CSS
+
+*/
+body {
+	background: #32373d;
+	font-size: 11px;
+	font-family: sans-serif, "Verdana CE", Arial, "Arial CE",
+		"Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+	color: #000000;
+}
+
+h1 {
+	font-family: Arial, "Arial CE", "Lucida Grande CE", lucida,
+		"Helvetica CE", sans-serif;
+	border-bottom: 0px solid #AFAFAF;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+	color: #878D95;
+}
+
+.profilePicture {
+	border: 0px solid #a6c9e2;
+    height: 150px;
+    margin-top: -25px;
+    width: 120px;
+}
+
+.cnic {
+	width: 180px;
+}
+
+.ui-button-icon-only {
+	height: 2.15em;
+	width: 2em;
+}
+
+.info {
+	color: green;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.error {
+	color: red;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+ul.ftur-list li {
+	margin-bottom: 5px;
+	font-size: 14px;
+	color: #333;
+}
+
+h1.hdng2 {
+	font-size: 1.8em;
+}
+
+.success {
+	background: none repeat scroll 0 0 #E6EFC2;
+	border: 1px solid #ccc;
+	color: #264409;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	padding: 5px 10px;
+	margin: 0 40px;
+}
+
+.error {
+	color: #D8000C;
+	background-color: #FFC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	padding: 1px 5px;
+	margin-bottom: 5px;
+}
+
+FORM {
+	MARGIN: 0px
+}
+
+/*Tabed home view */
+Table.tablistbox {
+	background-color: #fbfcfe;
+}
+
+.tablistbox th {
+	background-image: url(../images/tab_bg.gif);
+	height: 22px;
+	vertical-align: middle;
+	text-align: left;
+	padding-left: 10px;
+	font-weight: bold;
+	border: 0px;
+}
+
+.tablistbox td {
+	border-top: 0px;
+	border-right: 1px solid #a5c1e9;
+	border-bottom: 1px solid #a5c1e9;
+	border-left: 1px solid #a5c1e9;
+}
+
+div.tabPopup {
+	border: 1px solid #0a53b2;
+	background-color: #FFFFFF;
+	line-height: 16px;
+	padding: 3px;
+	width: 185px;
+}
+
+.rTitleExpanded {
+	background-image: url(../images/arrow_down.gif);
+	background-repeat: no-repeat;
+	background-position: right;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
+	color: #4169E1;
+	width: 100%;
+	background-color: #FFFFFF;
+	height: 30px;
+	padding-left: 5px;
+	border-color: #FFFFFF;
+	border-width: 1px;
+	border-style: solid;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.rOption {
+	background-image: url(../images/arrow-b.gif);
+	background-repeat: no-repeat;
+	background-position: 22px;
+	font-size: 8pt;
+	font-weight: normal;
+	text-align: left;
+	width: 50px;
+	color: #4169E1;
+	padding-top: 2px;
+	padding-left: 32px;
+}
+
+.commandLink {
+	color: #FFFFFF;
+	border: #efefef 1px hidden;
+	background-color: #305e90;
+	BORDER: #96d1f0 1px solid;
+	height: 4.5em;
+	width: 70px;
+	text-decoration: none;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.userInfo {
+	width: 400px;
+	margin-left: 25px;
+	vertical-align: top;
+}
+
+.userInfo tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+} /* first column */
+.userInfo tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+.eamtarRegistration {
+	margin-left: 180px;
+	font-weight: bold;
+	width: 685px;
+	margin-top: 20px;
+}
+
+.eamtarRegistration tr>td:first-child {
+	font-weight: bold;
+	width: 150px;
+	padding: 2px;
+} /* first column */
+.eamtarRegistration tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+.eamtarRegistration .ui-widget {
+	height: 18px;
+	font-size: 12px;
+	width: 20px;
+}
+
+.eamtarRegistration .ui-outputlabel {
+	padding: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 180px;
+}
+
+.eamtarRegistration .ui-inputfield {
+	padding: 10px;
+	width: 302px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarRegistration .ui-button {
+	width: 120px;
+	height: 35px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarRegistration INPUT[type="radio"] {
+	width: 60px;
+	height: 2em;
+}
+
+.eamtarRegistration .ui-selectonemenu label.ui-selectonemenu-label {
+	cursor: pointer;
+	line-height: 19px;
+}
+
+/*
+	SEARCH CRITERIA ...
+*/
+.eamtarSearchBar {
+	margin-left: 10px;
+	font-weight: bold;
+	width: 585px;
+}
+
+.eamtarSearchBar tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+	width: 150px;
+}
+
+.eamtarSearchBar .ui-widget {
+	font-size: 12px;
+	height: 18px;
+	width: 20px;
+}
+
+.eamtarSearchBar .ui-outputlabel {
+	padding: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 100px;
+}
+
+.eamtarSearchBar .ui-inputfield {
+	padding: 4px;
+	width: 180px;
+}
+
+.eamtarSearchBar .ui-button {
+	width: 90px;
+	height: 24px;
+	width: 90px;
+	border-radius: 3 px 3 px 3 px 3 px;
+}
+
+.eamtarSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+	line-height: 18px;
+}
+
+.eamtarSearchBar INPUT[type="radio"] {
+	width: 15px;
+	height: 2em;
+}
+
+.eamtarSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+	cursor: pointer;
+	line-height: 19px;
+}
+
+/*
+	SEARCH CRITERIA ...
+*/
+.basicSearchBar {
+	margin-top: 30px;
+	font-weight: bold;
+	margin-left: 70px;
+	width: 800px;
+}
+
+.basicSearchBar tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+	width: 120px;
+}
+
+.basicSearchBar tr>td:nth-child(3) {
+	font-weight: bold;
+	padding: 2px;
+	width: 120px;
+}
+
+.basicSearchBar tr > td:nth-child(3) .ui-outputlabel {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 50px;
+    padding: 4px;
+    width: 120px;
+}
+
+.basicSearchBar .ui-widget {
+	font-size: 12px;
+	height: 18px;
+	width: 20px;
+}
+
+.basicSearchBar .ui-outputlabel {
+	padding: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 120px;
+}
+
+.basicSearchBar .ui-inputfield {
+	padding: 4px;
+	width: 180px;
+}
+
+.basicSearchBar .ui-button {
+	width: 90px;
+	height: 24px;
+	width: 90px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.basicSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+	line-height: 18px;
+}
+
+.basicSearchBar INPUT[type="radio"] {
+	width: 15px;
+	height: 2em;
+}
+
+.basicSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+	cursor: pointer;
+	line-height: 19px;
+}
+
+
+
+/*
+* 2 column Table
+*/
+
+
+.basicSearch2Column {
+	margin-top: 30px;
+	font-weight: bold;
+	margin-left: 70px;
+	width: 800px;
+}
+
+.basicSearch2Column tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+	width: 320px;
+}
+
+.basicSearch2Column .ui-widget {
+	font-size: 12px;
+	height: 18px;
+	width: 20px;
+}
+
+.basicSearch2Column .ui-outputlabel {
+	padding: 4px;
+	font-size: 14px;
+	font-weight: bold;
+	width: 320px;
+	text-align: right;
+}
+
+.basicSearch2Column .ui-inputfield {
+	padding: 4px;
+	width: 180px;
+}
+
+.basicSearch2Column .ui-button {
+	width: 90px;
+	height: 24px;
+	width: 90px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.basicSearch2Column .ui-selectonemenu label.ui-selectonemenu-label {
+	line-height: 18px;
+}
+
+.basicSearch2Column INPUT[type="radio"] {
+	width: 15px;
+	height: 2em;
+}
+
+.basicSearch2Column .ui-selectonemenu label.ui-selectonemenu-label {
+	cursor: pointer;
+	line-height: 19px;
+}
+
+
+/*
+	SEARCH CRITERIA ...
+*/
+.eamtarLogin {
+	width: 550px;
+}
+
+.eamtarLogin .ui-widget {
+	height: 20px;
+	font-size: 12px;
+	width: 20px;
+}
+
+.eamtarLogin .ui-outputlabel {
+	font-size: 13px;
+	font-weight: bold;
+	padding: 5px;
+	width: 35px;
+}
+
+.eamtarLogin .ui-inputfield {
+	padding: 6px;
+	width: 180px;
+}
+
+.eamtarLogin .ui-button {
+	height: 25px;
+	width: 75px;
+	border-radius: 3px;
+}
+
+.oH1,h1 {
+	font-family: Adelle_Regular, Georgia, serif;
+	font-size: 26px;
+	font-weight: 400;
+	margin-bottom: 30px;
+}
+
+.oH1Huge {
+	font-family: Adelle_Regular, Georgia, serif;
+	font-size: 30px;
+	font-weight: 460;
+}
+
+h2,.oH2,.oH2Maj {
+	background: none repeat scroll 0 0 #F2F2F0;
+	border-radius: 7px 7px 7px 7px;
+	font-size: 18px;
+	font-weight: 300;
+	margin-bottom: 24px;
+	padding: 9px 10px 9px 16px;
+}
+
+.oH2Low,.oH2High {
+	background: none repeat scroll 0 center rgba(0, 0, 0, 0);
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+
+.oH2High {
+	color: #5C5C5C;
+    font-size: 1.4em;
+    font-weight: bolder;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+
+.oH2Lite {
+	background: none repeat scroll 0 center rgba(0, 0, 0, 0);
+	border-bottom: 1px solid #C0C1C1;
+	border-radius: 0 0 0 0;
+	font-family: Adelle_Regular, Georgia, serif;
+	font-size: 22px;
+	padding: 9px 0;
+}
+
+.oH3,.oBtnToggle,h3 {
+	font-size: 13px;
+	padding-bottom: 5px;
+}
+
+.oH3Lite {
+	border-bottom: 1px solid #C0C1C1;
+	margin-bottom: 10px;
+}
+
+.oH4,h4 {
+	color: #252523;
+	font-size: 13px;
+	font-weight: 700;
+	padding-bottom: 8px;
+}
+
+.oH5,.oWidget>header>h1,.oFormHelp>h1,.oH6,h5 {
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.oHMin {
+	color: #8C8C89;
+	font-weight: 400;
+}
+
+.oHMin:before {
+	color: #252523;
+	content: "|";
+	padding-right: 6px;
+}
+
+.oRowTitle {
+	display: block;
+	font: 700 14px sans-serif;
+	margin-bottom: 6px;
+}
+
+.oHInline {
+	display: inline-block;
+	padding-right: 20px;
+}
+
+hgroup {
+	margin-bottom: 18px;
+}
+
+.messageButton,.ui-datatable tbody td td {
+	border-width: 0px;
+	padding: 0px;
+}
+
+/*
+* QUICK VIEW
+*/
+.quickViewDiv {
+	height: 0px;
+	display: none;
+	position: relative;
+	top: 20px;
+	margin-left: -10px;
+	cursor: pointer !important;
+	width: 90px;
+}
+
+.loginMegaMenu {
+	margin: 0 0 0 0x;
+}
+
+.loginMegaMenu .ui-button {
+	color: #007dad;
+    font-family: "Open Sans",sans-serif;
+    font-size: 0.875em;
+    font-weight: normal;
+    height: 40px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    transition: all 0.5s ease 0s;
+}
+
+.marginDiv {
+	text-align: left;
+	border: 0px solid #A6C9E2;
+	margin: 0px;
+}
+
+.marginContentDiv {
+	border: medium none;
+	text-align: left;
+	border: 0px solid #A6C9E2;
+	margin: 0px;
+	margin-top: 10px;
+	width: 85%;
+}
+
+.first-row {
+     background-color: #CCCCFF !important;
+     background-image: none !important;
+     color: #000000 !important;
+}
+               
+.second-row {
+    background-color: #F0F0F0 !important;
+    background-image: none !important;
+    color: #000000 !important;
+    margin-left:101px;
+}
+
+.third-row {
+    background-color: #f0f0f0 !important;
+    background-image: none !important;
+    color: #000000 !important;
+    margin-left: 55px;
+}
+
+.eamtarContactUs {
+	font-weight: bold;
+	width: 200px;
+}
+
+.eamtarContactUs tr>td:first-child {
+	font-weight: bold;
+	width: 150px;
+	padding: 2px;
+	margin-top: 20px;
+	
+}
+
+.eamtarContactUs .ui-inputfield {
+	padding: 10px;
+	width: 302px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarContactUs .ui-button {
+	width: 120px;
+	height: 35px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+/*
+* Videos
+*/
+
+.videoPlaySection {
+	margin-top: 30px;
+	margin-left: 30px;
+	margin-right: auto;
+	width: 600px;
+}
+
+.searchVideoResults .ui-datagrid-data{
+	width: 0;
+}
+
+.searchVideoResults .title {
+    color: Black;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 0.55em;
+    text-align: justify;
+}
+
+.searchVideoResults .postedBy {
+    color: #555;
+    display: block;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 0.35em;
+}
+
+.searchVideoResults .thumbnail {
+ 	height: 120px;
+    margin-left: 5px;
+    width: 215px;
+}
+
+.searchVideoResults .ui-widget-content {
+    border: 0 solid #a6c9e2;
+}
+
+.videoTitle{
+	font-size:1.8em;
+	font-weight:bold;
+}
+
+.videoDetail td{
+	vertical-align: top;
+}
+
+.videoDetail {
+	margin-top:25px;
+    height: 155px;
+    width: 210px;
+    text-align: left;
+    vertical-align: top;
+    
+}
+
+.verticalVideoResultsBar{
+	margin-top:35px;
+}
+
+.verticalVideoResultsBar .ui-datagrid-data{
+	width: 0;
+}
+
+.verticalVideoResultsBar .title {
+    color: Black;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 0.55em;
+}
+
+.verticalVideoResultsBar .postedBy {
+    color: #555;
+    display: block;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 0.35em;
+}
+
+.verticalVideoResultsBar .ui-widget-content {
+    border: 0 solid #a6c9e2;
+}
+
+
+.videoDetailVertical td{
+	vertical-align: top;
+}
+
+.videoDetailVertical {
+	margin-top:2px;
+    width: 265px;
+    text-align: left;
+    vertical-align: top;
+    
+}
+

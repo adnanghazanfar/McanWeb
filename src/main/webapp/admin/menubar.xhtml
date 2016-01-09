@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+	<h:form id="megaMenu">
+		<p:megaMenu orientation="horizontal" style="margin-top:20px">
+			<p:submenu label="Profile" icon="ui-icon-document">
+				<p:column>
+					<p:menu>
+						<p:menuitem value="View Profile" url="/admin/profile.xhtml" />
+						<p:menuitem value="Edit Profile" url="/admin/editProfile.xhtml" />
+					</p:menu>
+				</p:column>
+			</p:submenu>
+
+			<p:submenu label="Manage Mcan" icon="ui-icon-mail-closed">
+				<p:column>
+					<p:menu>
+						<p:menuitem value="Manage Video" url="/admin/manageVideo.xhtml"
+							icon="ui-icon-document" />
+						<p:menuitem value="Manage User" url="/admin/manageUser.xhtml"
+							icon="ui-icon-search" />
+					</p:menu>
+				</p:column>
+			</p:submenu>
+
+			<!-- <p:submenu label="Job" icon="ui-icon-contact">
+				<p:column>
+					<p:submenu label="Tech.1">
+						<p:menuitem value="Tech.1.1" url="#" />
+						<p:menuitem value="Tech.1.2" url="#" />
+					</p:submenu>
+					<p:submenu label="Tech.2">
+						<p:menuitem value="Tech.2.1" url="#" />
+					</p:submenu>
+				</p:column>
+
+				<p:column>
+					<p:submenu label="Tech.4">
+						<p:menuitem value="Tech.4.1" url="#" />
+						<p:menuitem value="Tech.4.2" url="#" />
+					</p:submenu>
+				</p:column>
+			</p:submenu> -->
+
+			<p:menuitem value="Logout" url="/login.xhtml" icon="ui-icon-close" />
+		</p:megaMenu>
+	</h:form>
+
+</h:body>
+
+</html>

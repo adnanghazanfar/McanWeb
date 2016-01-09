@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+   version="3.0">
+	
+	<display-name>MCANWEB</display-name>
+	<description>Medical Career Advising Application</description>
+	<context-param>
+		<description>The EMAIL address of the administrator to whom questions and comments about this application should be addressed.</description>
+		<param-name>webmaster</param-name>
+		<param-value>adnan.ghazanfar@yahoo.com</param-value>
+	</context-param>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/index.xhtml</location>
+	</error-page>
+	<filter>
+		<filter-name>LogFilter</filter-name>
+		<filter-class>com.eamtar.mccn.util.AccessFilter</filter-class>
+		<init-param>
+			<param-name>test-param</param-name>
+			<param-value>This parameter is for testing.</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>LogFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.VIEW_MAPPINGS</param-name>
+		<param-value>*.xhtml</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>Resource Servlet</servlet-name>
+		<servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>Initializes Resources</description>
+		<servlet-name>ResourceInit</servlet-name>
+		<servlet-class>com.eamtar.mccn.servlets.ResourceInit</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+	
+	<!-- SERVLET SETTING -->
+	
+	<listener>
+		<description>sessionListener</description>
+		<listener-class>com.eamtar.mccn.util.SessionListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>AccountActivationServlet</servlet-name>
+		<servlet-class>com.eamtar.mccn.servlets.AccountActivationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccountActivationServlet</servlet-name>
+		<url-pattern>/verification</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AccountActivationServlet</servlet-name>
+		<url-pattern>/activation</url-pattern>
+	</servlet-mapping>
+	
+	<!-- SPRING SETTING -->
+ 	
+ 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/root-context.xml</param-value>
+    </context-param>
+     
+    <!-- Creates the Spring Container shared by all Servlets and Filters -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+ 
+    <!-- Processes application requests -->
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+         
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+	
+</web-app>

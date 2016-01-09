@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.Location" table="location"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="locationId">
+			<column name="locationId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="cityName">
+			<column name="cityName" length="30" />
+		</property>
+		<property type="java.lang.String" name="stateName">
+			<column name="stateName" length="20" />
+		</property>
+		<property type="java.lang.String" name="countryName">
+			<column name="countryName" length="30" />
+		</property>
+		<property type="java.lang.Integer" name="postalCode">
+			<column name="postalCode" length="15" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+	</class>
+</hibernate-mapping>

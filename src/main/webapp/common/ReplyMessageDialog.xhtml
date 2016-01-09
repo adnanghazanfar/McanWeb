@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="ReplyMessageDialogForm">
+
+		<p:dialog header="Reply" widgetVar="replyMessageDialog"
+			modal="true" id="replyMessageDialog" resizable="false" height="355"
+			width="525">
+
+			<h:panelGrid columns="1" cellpadding="4"
+				styleClass="eamtarOneColumnDialog" id="ReplyMessageDialogDetail">
+
+				<p:outputLabel value="Reply :" />
+				<p:inputTextarea label="Reply Message" id="replyMessage"
+					value="#{messageBean.replyMessage}"
+					maxlength="1000" style="width: 400px;height: 200px;">
+					<f:validateLength minimum="1" maximum="1000"></f:validateLength>
+				</p:inputTextarea>
+
+				<br />
+
+				<f:facet name="footer">
+					<p:commandButton style="height:25px;" value="Send"
+						update="@([id$=messages])"
+						actionListener="#{messageController.sendReplyMessage}"
+						id="ReplyMessageBtn" />
+				</f:facet>
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+
+</html>

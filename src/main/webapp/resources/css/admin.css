@@ -1,0 +1,38 @@
+/*
+* This CSS class is used for 
+* css designing on physician pages  any change here will reflect directly to
+* to physician pages nothing else 
+*/
+
+body {
+	background:#E6E6FA;
+}
+
+.right_content{
+	background:#E6E6FA;
+}
+
+
+.ui-datatable table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+
+.adminMoreMainInfo {
+	width: 240px;
+	margin-left: 0px;
+	vertical-align: top;
+	margin-top: 20px;
+}
+
+.adminMoreMainInfo tr>td:first-child {
+	padding: 0px;
+	text-align: center;
+} /* first column */
+
+.adminMoreMainInfo tr>td:first-child+td { 
+	vertical-align: top;
+	text-align: left;
+}/* color: green;*/

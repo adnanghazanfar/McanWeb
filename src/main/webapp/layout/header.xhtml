@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view>
+	<div class="header">
+		<div class="top-header">
+			<div class="wrap">
+				<div class="right-left">
+					<ul>
+						<li class="sign"><a href="/contactus.xhtml">Help &amp;
+								Support</a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="main-header">
+			<div class="wrap">
+				<div class="logo">
+					<a href="/index.xhtml"><img height="100"
+						src="/resources/images/logo.jpg" /></a>
+				</div>
+				<div class="social-links">
+
+					<c:choose>
+						<c:when
+							test="#{userBean !=null and userBean.email !=null and userBean.loggedIn}">
+							<c:choose>
+								<c:when test="#{userBean.userType == 1}">
+									<c:choose>
+										<c:when
+											test="#{userBean !=null and userBean.email !=null and userBean.loggedIn}">
+											<h:form style="margin: 0 0 0;">
+
+												<p:menuButton styleClass="loginMegaMenu"
+													value="#{userBean.user.firstNameFirst}">
+													<p:menuitem value="View Profile"
+														url="/physician/profile.xhtml" icon="ui-icon-home" />
+													<p:menuitem value="Edit Profile"
+														url="/physician/editProfile.xhtml" icon="ui-icon-pencil" />
+													<p:separator />
+													<p:menuitem icon="ui-icon-comment" value="Compose"
+														url="/physician/messages.xhtml?viewType=COMPOSE" />
+													<p:menuitem value="Inbox" icon="ui-icon-mail-open"
+														url="/physician/messages.xhtml?viewType=INBOX" />
+													<p:menuitem value="Sent" icon="ui-icon-mail-closed"
+														url="/physician/messages.xhtml?viewType=OUTBOX" />
+													<p:menuitem value="Deleted" icon="ui-icon-trash"
+														url="/physician/messages.xhtml?viewType=DELETED" />
+													<p:separator />
+													<p:menuitem value="Career Advisors"
+														url="/physician/search.xhtml" icon="ui-icon-search" />
+													<p:menuitem value="Logout"
+														action="#{userController.doLogout}" icon="ui-icon-close" />
+												</p:menuButton>
+
+											</h:form>
+										</c:when>
+										<c:otherwise>
+											<h:outputLabel style="height:35px;"></h:outputLabel>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:when test="#{userBean.userType == 5}">
+									<c:choose>
+										<c:when
+											test="#{userBean !=null and userBean.email !=null and userBean.loggedIn}">
+											<h:form style="margin: 0 0 0;">
+
+												<p:menuButton styleClass="loginMegaMenu"
+													value="#{userBean.user.firstNameFirst}">
+													<p:menuitem value="View Profile" url="/admin/profile.xhtml"
+														icon="ui-icon-home" />
+													<p:menuitem value="Edit Profile"
+														url="/admin/editProfile.xhtml" icon="ui-icon-pencil" />
+													<p:separator />
+													<p:menuitem value="Logout"
+														action="#{userController.doLogout}" icon="ui-icon-close" />
+												</p:menuButton>
+
+											</h:form>
+										</c:when>
+										<c:otherwise>
+											<h:outputLabel style="height:35px;"></h:outputLabel>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<p:button outcome="/login.xhtml" value="Sign In"
+								styleClass="action-button animate blue"></p:button>
+							<p:button outcome="/register.xhtml" value="Sign Up"
+								styleClass="action-button animate green"></p:button>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="top-nav">
+			<div class="wrap">
+				<ul>
+					<li class="active"><a href="/index.xhtml">Home</a></li>
+					<li><a href="/howitworks.xhtml">How it works</a></li>
+					<li><a href="/getstarted.xhtml">Get Started</a></li>
+					<li><a href="/search/basic.xhtml">Career Advisors</a></li>
+					<li><a href="/videos/index.xhtml">Video Tutorials<sub>New</sub></a></li>
+					<li><a href="/contactus.xhtml">Contact Us</a></li>
+
+				</ul>
+			</div>
+			<div class="clear"></div>
+
+		</div>
+	</div>
+</f:view>
+</html>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+	<p:panel id="rightBar" style="min-height:650px;margin-bottom:15px;">
+		<h:panelGrid columns="1" cellpadding="10"
+			styleClass="adminMoreMainInfo">
+			
+			<p:galleria panelWidth="240"
+				panelHeight="173" showCaption="true">
+				<p:graphicImage value="#{resource['images:/gallery/image_01.jpg']}"
+					alt="Image Description for First Image" title="01" />
+				<p:graphicImage value="#{resource['images:/gallery/image_03.jpg']}"
+					alt="Image Description for Second Image" title="02" />	
+				<p:graphicImage value="#{resource['images:/gallery/image_01.jpg']}"
+					alt="Image Description for Third Image" title="03" />
+				<p:graphicImage value="#{resource['images:/gallery/image_03.jpg']}"
+					alt="Image Description for Forth Image" title="04" />					
+			</p:galleria>
+			
+			<h:outputLabel style="height:30px;"></h:outputLabel>
+
+			<h:panelGrid columns="2" style="width:240px;">
+				<f:facet name="header">
+					<p:outputLabel value="Website Stats"
+						style="font-weight: bold;font-size: 16px;margin-top: 5px;"></p:outputLabel>
+				</f:facet>
+
+				<f:verbatim />
+				<h:outputLabel style="height:30px;"></h:outputLabel>
+
+
+				<p:outputLabel value="Client"></p:outputLabel>
+			    <p:clock pattern="HH:mm:ss dd.MM.yyyy"/>
+			 
+			    <p:outputLabel value="Server"></p:outputLabel>
+			    <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+							
+			</h:panelGrid>
+			
+			<h:outputLabel style="height:30px;"></h:outputLabel>
+			
+
+
+		</h:panelGrid>
+	</p:panel>
+
+</h:body>
+
+</html>

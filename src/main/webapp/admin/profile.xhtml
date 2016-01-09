@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template=".././layout/adminLayout.xhtml">
+
+	<ui:define name="right_content">
+
+		<f:event listener="#{userProfileController.initValues}"
+			type="preRenderView" />
+
+		<p:fieldset legend="Admin Information">
+
+			<h:panelGrid styleClass="userInfo" columns="2" style="width: 615px;">
+				<h:outputLabel styleClass="oH1Huge"
+					value="#{userBean.user.firstName} #{userBean.user.lastName}" />
+
+				<h:panelGrid
+					rendered="#{userProfileBean.selectedUserProfile.userProfile != null}">
+					<p:rating
+						value="#{userProfileBean.selectedUserProfile.userProfile.profileRating}"
+						readonly="true" />
+				</h:panelGrid>
+
+			</h:panelGrid>
+
+			<h:panelGrid
+				rendered="#{userProfileBean.selectedUserProfile.userProfile != null}"
+				styleClass="userHeader">
+				<!-- <h2 class="oH2High oContractorInfoTitle">#{userProfileBean.selectedUserProfile.userProfile.summary}</h2>
+				<br /> -->
+				<p:outputLabel style="text-align: justify;font-size: 1.05em;"
+					value="#{userProfileBean.selectedUserProfile.userProfile.description}"></p:outputLabel>
+			</h:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="2" style="border:2px">
+				<h:panelGroup>
+
+					<h:panelGrid columns="2" styleClass="userInfo">
+						<p:outputLabel value="Email:" />
+						<p:outputLabel value="#{userBean.user.emailAddress}" />
+
+						<p:outputLabel value="First Name:" />
+						<p:outputLabel value="#{userBean.user.firstName}" />
+
+						<p:outputLabel value="Last Name:" />
+						<p:outputLabel value="#{userBean.user.lastName}" />
+
+						<p:outputLabel value="Phone:" />
+						<p:outputLabel value="#{userBean.user.contactNumber}" />
+
+						<p:outputLabel value="Member Since:" />
+						<p:outputLabel
+							value="#{userProfileController.convertToDate(userBean.user.createdDate)}" />
+
+						<p:outputLabel value="Profile Updated:" />
+						<p:outputLabel
+							value="#{userProfileController.convertToDate(userBean.user.modifiedDate)}" />
+
+						<br />
+
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:graphicImage
+					value="../resources/images/profile/#{userBean.user.userProfilePicture}"
+					styleClass="profilePicture" />
+			</h:panelGrid>
+			<h:panelGrid columns="1" style="float:right;margin-right:20px;">
+				<h:link value="Edit your Profile"
+					style="text-align:left;font-weight:bold;"
+					outcome="/admin/editProfile.xhtml"></h:link>
+			</h:panelGrid>
+
+
+		</p:fieldset>
+
+
+		<br />
+
+
+		<p:dataGrid var="userAcademic"
+			value="#{userProfileBean.selectedUserProfile.userAcademics}"
+			columns="1">
+
+			<f:facet name="header">
+            	Academic Qualification
+        	</f:facet>
+
+			<p:panel style="text-align:left">
+				<h:panelGrid columns="2" styleClass="oneRowDataGridPanel">
+
+					<f:facet name="header">
+						<p:outputLabel style="font-size:14px;font-weight:bold;"
+							value="#{userAcademic.academicTitle}" />
+					</f:facet>
+
+					<p:outputLabel style="font-weight:bold;" value="Institute : " />
+					<p:outputLabel value="#{userAcademic.instituteName}" />
+
+					<p:outputLabel style="font-weight:bold;width:150px;"
+						value="Year of Completion  : " />
+					<p:outputLabel value="#{userAcademic.yearCompleted}" />
+
+
+					<f:facet name="footer">
+						<p:outputLabel style="font-weight:bold;"
+							value="More details about this Degree , exam or scholarship : " />
+						<p:outputLabel value="#{userAcademic.academicDescription}" />
+					</f:facet>
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+
+		<br />
+
+		<p:dataGrid var="userExperience" id="experiences"
+			value="#{userProfileBean.selectedUserProfile.userExperiences}"
+			columns="1">
+
+			<f:facet name="header">
+            	Training and Work Experience
+        	</f:facet>
+
+			<p:panel style="text-align:left">
+				<h:panelGrid columns="2" styleClass="oneRowDataGridPanel">
+
+					<f:facet name="header">
+						<p:outputLabel style="font-size:14px;font-weight:bold;"
+							value="#{userExperience.experienceType}" />
+					</f:facet>
+
+					<p:outputLabel style="font-weight:bold;" value="Position : " />
+					<p:outputLabel
+						value="#{userExperience.isCurrent eq false ? 'Previous' : 'Current'}" />
+
+					<p:outputLabel style="font-weight:bold;"
+						value="Institution/Company : " />
+					<p:outputLabel value="#{userExperience.workPlace}" />
+
+					<p:outputLabel style="font-weight:bold;" value="Duration : " />
+					<h:panelGroup>
+						<h:outputText
+							value="#{userExperience.fromMonth}-#{userExperience.fromYear}" />
+						<h:outputText rendered="#{!userExperience.isCurrent}"
+							value=" to #{userExperience.toMonth}-#{userExperience.toYear}"></h:outputText>
+						<h:outputText rendered="#{userExperience.isCurrent}"
+							value=" to Present"></h:outputText>
+					</h:panelGroup>
+
+					<f:facet name="footer">
+						<p:outputLabel style="font-weight:bold;"
+							value="More details about this position : " />
+						<p:outputLabel value="#{userExperience.description}" />
+					</f:facet>
+
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+
+		<br />
+
+		<p:dataTable id="addresses" var="userAddress" rowIndexVar="rowIndex"
+			value="#{userProfileBean.selectedUserProfile.userAddresses}">
+
+			<f:facet name="header">  
+            	Places you have lived or worked in  
+        	</f:facet>
+
+			<p:column headerText="#" style="width:2%">
+				<p:outputLabel value="#{rowIndex+1}" />
+			</p:column>
+
+			<p:column headerText="City" style="width:38%">
+				<p:outputLabel value="#{userAddress.location.cityName}" />
+			</p:column>
+
+			<p:column headerText="State/Governate" style="width:20%">
+				<p:outputLabel value="#{userAddress.location.stateName}" />
+			</p:column>
+
+			<p:column headerText="Country" style="width:25%">
+				<p:outputLabel value="#{userAddress.location.countryName}" />
+			</p:column>
+
+			<p:column headerText="Type" style="width:15%">
+				<p:outputLabel value="#{userAddress.addressType}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+	</ui:define>
+
+</ui:composition>

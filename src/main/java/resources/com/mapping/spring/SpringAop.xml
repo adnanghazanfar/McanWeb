@@ -1,0 +1,65 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<bean id="logger" class="com.eamtar.mccn.util.LoggerManager" />
+
+	<aop:config>
+		<aop:aspect ref="logger">
+			<aop:pointcut id="performance"
+				expression="execution(* com.eamtar.mccn..*.*(..))" />
+			<aop:after-throwing pointcut-ref="performance"
+				method="writeLog" throwing="exception" />
+			<aop:before pointcut-ref="performance" method="before"/>
+			<aop:after pointcut-ref="performance" method="after"/>
+		</aop:aspect>
+	</aop:config>
+
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- all methods starting with 'find & get' are read-only -->
+			<tx:method name="find*" read-only="true" /> 
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- <aop:pointcut id="logServiceMethods" expression="execution(* com.sanmar..*.*(..))"/> -->
+		<aop:pointcut id="servicesMethods"
+			expression="execution(* com.eamtar.mccn.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicesMethods" />
+	</aop:config>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="mySqlSessionFactory" />
+		</property>
+	</bean>
+
+
+	<!-- There are 7 types of propagation supported by Spring : PROPAGATION_REQUIRED 
+		– Support a current transaction; create a new one if none exists. PROPAGATION_SUPPORTS 
+		– Support a current transaction; execute non-transactionally if none exists. 
+		PROPAGATION_MANDATORY – Support a current transaction; throw an exception 
+		if no current transaction exists. PROPAGATION_REQUIRES_NEW – Create a new 
+		transaction, suspending the current transaction if one exists. PROPAGATION_NOT_SUPPORTED 
+		– Do not support a current transaction; rather always execute non-transactionally. 
+		PROPAGATION_NEVER – Do not support a current transaction; throw an exception 
+		if a current transaction exists. PROPAGATION_NESTED – Execute within a nested 
+		transaction if a current transaction exists, behave like PROPAGATION_REQUIRED 
+		else. In most cases, you may just need to use the PROPAGATION_REQUIRED. -->
+
+</beans>

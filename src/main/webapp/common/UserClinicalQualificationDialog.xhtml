@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="ClinicalQualificationDialogForm">
+
+		<p:dialog header="Clinical or Medical School Year"
+			widgetVar="clinicalQualificationDialog" modal="true"
+			id="clinicalQualificationDialog" resizable="false" height="265"
+			width="525">
+
+			<h:panelGrid columns="1" cellpadding="4"
+				styleClass="eamtarOneColumnDialog"
+				rendered="#{userProfileBean.selectedUserClinicalQualification !=null}"
+				id="ClinicalQualificationPanelDetail">
+
+
+				<p:outputLabel value="Clinical Specialty or Medical Student:*" />
+				<p:selectOneMenu id="specialty" label="Specialty"
+					converter="specialtyConverter"
+					value="#{userProfileBean.selectedUserClinicalQualification.specialty}"
+					effect="fade" filter="true" filterMatchMode="startsWith"
+					required="true" style="height: 27px;width: 190px;">
+					<f:selectItem />
+					<f:selectItems value="#{commonBean.specialtyMap.values()}"
+						var="specialty" itemLabel="#{specialty.name}"
+						itemValue="#{specialty}"></f:selectItems>
+					<f:ajax execute="specialty" event="change"
+						listener="#{userProfileController.loadSubSpecialties}"
+						render="subSpecialtyPanel" />
+				</p:selectOneMenu>
+
+				<h:panelGroup id="subSpecialtyPanel">
+
+					<h:panelGroup
+						rendered="#{userProfileBean.selectedUserClinicalQualification.specialty.name ne 'Not specialized'}">
+
+						<p:outputLabel value="#{userProfileBean.subSpecialtyLabel}" />
+
+						<p:inputText id="subSpecialtyInputField" maxlength="100"
+							label="Sub Specialty"
+							rendered="#{userProfileBean.subSpecialties == null or (userProfileBean.subSpecialties.size() == 0)}"
+							value="#{userProfileBean.selectedUserClinicalQualification.customSpecialty}">
+							<f:validateLength minimum="5" maximum="100" />
+						</p:inputText>
+						<p:selectOneMenu id="subSpecialtyDropDown"
+							style="height: 27px;width: 190px;" effect="fade" filter="true"
+							filterMatchMode="startsWith" label="Sub Specialty"
+							rendered="#{userProfileBean.subSpecialties != null and (userProfileBean.subSpecialties.size() > 0)}"
+							value="#{userProfileBean.selectedUserClinicalQualification.subSpecialty.specialtyId}">
+							<f:selectItem></f:selectItem>
+							<f:selectItems value="#{userProfileBean.subSpecialties}"
+								var="specialty" itemLabel="#{specialty.name}"
+								itemValue="#{specialty.specialtyId}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+
+				</h:panelGroup>
+
+
+				<br />
+
+
+				<f:facet name="footer">
+					<p:commandButton style="height:25px;" value="Save"
+						id="updateClinicalQualificationBtn"
+						update="@([id$=ClinicalQualificationPanel],[id$=ClinicalQualificationPanelDetail],[id$=messages])"
+						action="#{userProfileController.saveOrUpdateUserClinicalQualification}"
+						oncomplete="PF('clinicalQualificationDialog').hide();" />
+					<h:outputLabel
+						style="color:red;font-size:14;font-weight:bold;margin-top:5px;"
+						value="Allows multiple entries, click save after each entry."></h:outputLabel>
+				</f:facet>
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+
+</html>

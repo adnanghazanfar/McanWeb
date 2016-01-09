@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.User" table="user"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="userId">
+			<column name="userId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="emailAddress">
+			<column name="emailAddress" length="30" />
+		</property>
+		<property type="java.lang.String" name="firstName">
+			<column name="firstName" length="30" />
+		</property>
+		<property type="java.lang.String" name="lastName">
+			<column name="lastName" length="30" />
+		</property>
+		<property type="java.lang.String" name="password">
+			<column name="password" length="30" />
+		</property>
+		<property type="java.lang.Integer" name="userType">
+			<column name="userType" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="status">
+			<column name="status" length="2" />
+		</property>
+		<property type="java.lang.String" name="gender">
+			<column name="gender" length="30" />
+		</property>
+		<property type="java.lang.String" name="profilePicture">
+			<column name="profilePicture" length="50" />
+		</property>
+		<property type="java.lang.String" name="contactNumber">
+			<column name="contactNumber" length="30" />
+		</property>
+		<property type="java.util.Date" name="dob">
+			<column name="dob" length="12" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+	</class>
+</hibernate-mapping>

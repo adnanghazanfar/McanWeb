@@ -1,0 +1,109 @@
+/*
+Overload Primefaces
+Auther: Adnan Ghazanfar
+Pakistan
+*/
+
+/*
+* BASIC SEARCH
+*/
+
+.searchResults .ui-datagrid-data{
+	width: 0;
+}
+
+.searchResults .ui-outputlabel{
+	color: #555;
+    cursor: pointer;
+    display: block;
+    font-size: 0.875em;
+    font-weight: 500;
+    margin-bottom: 0.1875em;
+    text-align: justify;
+}
+
+
+.userDetail{
+	vertical-align: top;
+	text-align:left;
+	width:306px;
+	height:110px
+}
+
+.userDetail td{
+	vertical-align: top;
+}
+
+
+
+
+.quickViewProfile {
+	width: 100%;
+}
+
+.quickViewProfile tr>td:first-child {
+	font-weight: bold;
+	width:150px;
+	padding-bootom: 3px;
+} 
+
+.quickViewProfile {
+	margin-left:75px;
+	margin-top:10px;
+	width: 200px;"
+}
+
+.quickViewProfile tr>td:first-child {
+	width: 200px;
+	padding: 0px;
+} /* first column */
+
+.quickViewProfile tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+        
+.quickViewProfile .ui-widget {
+	height: 20px;
+    font-size: 12px;
+    width: 20px;
+}
+
+.quickViewProfile .ui-outputlabel {
+	margin-bottom:5px;
+	width: 200px;
+	font-size: 0.81rem;
+    font-style: normal;
+    font-weight: lighter;
+}
+
+
+.quickViewHeader {
+    margin-left: 25px;
+    vertical-align: top;
+    width: 510px;
+}
+
+.quickViewUserInfo {
+	width: 490px;
+	margin-left: 25px;
+	vertical-align: top;
+}
+
+.quickViewUserInfo tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+	width:160px;
+} /* first column */
+
+.quickViewUserInfo tr>td:first-child .ui-outputlabel{
+	font-weight: bold;
+	width:160px;
+} /* first column */
+
+.quickViewUserInfo tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+
+.ui-widget-content a {
+    color: #4682B4;
+}

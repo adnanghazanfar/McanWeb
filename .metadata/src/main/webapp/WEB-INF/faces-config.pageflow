@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14304908690200" configfile="/mcanweb/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="122" y="562" id="pf14511440515800" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14511440515801 pf14511440515802 pf14511440515803" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/profile.xhtml" x="338" y="178" id="pf14511440515814" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14511440515801" path="/admin/profile.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="physician/profile.xhtml" x="338" y="562" id="pf14511440515815" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14511440515802" path="/physician/profile.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="app.xhtml" x="338" y="946" id="pf14511440515816" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14511440515803" path="/app.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="physician/search.xhtml" x="122" y="1330" id="pf14511440515817" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14511440515818" path="/physician/search.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="physician/viewUserProfile.xhtml" x="338" y="1330" id="pf14511440515819" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14511440515818" path="/physician/viewUserProfile.xhtml"/>
+  <links id="pf14511440515801" target="pf14511440515814" source="pf14511440515800" outcome="admin" redirect="true"/>
+  <links id="pf14511440515802" target="pf14511440515815" source="pf14511440515800" outcome="physician" redirect="true"/>
+  <links id="pf14511440515803" target="pf14511440515816" source="pf14511440515800" outcome="user" redirect="true"/>
+  <links id="pf14511440515818" target="pf14511440515819" source="pf14511440515817" outcome="viewUserProfile" redirect="true"/>
+</pageflow:Pageflow>

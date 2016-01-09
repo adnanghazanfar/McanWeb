@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="SendMessageDialogForm">
+
+		<p:dialog header="Send Message to #{searchBean.userProfileDTO.userProfile.user.firstNameFirst}" widgetVar="sendMessageDialog"
+			modal="true" id="sendMessageDialog" resizable="false" height="315"
+			width="625">
+
+			<h:form id="SendMessageForm">
+
+				<h:panelGrid columns="2" styleClass="messagePanel"
+					id="SendMessagePanel">
+
+					<h:outputLabel value="Subject " for="subjectMessage" />
+					<p:inputText id="subjectMessage" maxlength="100" required="true"
+						label="Subject" value="#{messageBean.subject}">
+						<f:validateLength minimum="2" maximum="100" />
+					</p:inputText>
+
+					<h:outputLabel for="messageBody" value="Message Body" />
+					<p:inputTextarea style="width: 375px;" label="Message"
+						value="#{messageBean.messageBody}" required="true"
+						requiredMessage="Message body is required" id="messageBody"
+						rows="5" cols="30" counter="display" maxlength="1000"
+						counterTemplate="{0} characters remaining." />
+					<f:verbatim />
+					<h:outputText id="display" />
+					<f:verbatim />
+
+					<f:verbatim />
+					<f:verbatim />
+
+					<h:panelGroup>
+						<p:commandButton value="Send"
+							update="@([id$=messages],[id$=SendMessagePanel])"
+							actionListener="#{messageController.sendShortMessage(searchBean.userProfileDTO.userProfile.user)}">
+						</p:commandButton>
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+
+</html>

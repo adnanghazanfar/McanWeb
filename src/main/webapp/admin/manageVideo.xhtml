@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template=".././layout/adminLayout.xhtml">
+
+	<c:if test="#{videoBean.intialized}">
+		<f:metadata>
+			<f:event listener="#{videoController.initializeValues()}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</c:if>
+
+	<ui:define name="right_content">
+		<h:form id="form">
+			<p:growl />
+			<p:growl id="messages" autoUpdate="true"></p:growl>
+
+			<p:fieldset legend="Manage Video" id="videoBar">
+				<br />
+				<h:panelGrid columns="1">
+
+					<h:panelGrid columns="1">
+						<h:outputLabel styleClass="oH1Huge" value="Add Video!"></h:outputLabel>
+						<h:outputLabel value="Here you can add youtube video on Mcan!?"></h:outputLabel>
+						<h:outputLabel
+							value="Provide youtube Video url below keenly and press add. "></h:outputLabel>
+					</h:panelGrid>
+
+					<h:panelGrid columns="1" styleClass="videoPlaySection">
+						<h:panelGroup>
+							
+							<p:inputText id="videoInput" label="URL" effect="fade"
+								required="true" value="#{videoBean.videoUrl}"
+								style="height: 35px;width: 490px;">
+								<f:validateLength minimum="25"></f:validateLength>
+							</p:inputText>
+							<p:commandButton value="Add" style="height:44px;width: 94px;"
+								actionListener="#{videoController.addVideo}"
+								update="@([id$=form])"></p:commandButton>
+							<p:watermark for="videoInput" value="Video URL .."></p:watermark>
+
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGrid>
+				<br />
+
+			</p:fieldset>
+
+			<p:dataTable var="video" id="videosDataTable" paginator="true"
+				rows="15" value="#{videoBean.videoList}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,15,20">
+
+				<f:facet name="header">  
+            		List of All Videos 
+        		</f:facet>
+
+				<p:column style="width:5%">
+					<h:selectBooleanCheckbox value="#{video.selected}" />
+				</p:column>
+				<p:column headerText="Title" style="width:85%">#{video.title}</p:column>
+				<p:column headerText="URL" style="width:10%">
+					<h:outputLink value="#{video.url}" target="_blank">click here</h:outputLink>
+				</p:column>
+
+			</p:dataTable>
+
+			<br />
+			<p:commandButton value="Delete" id="deleteButton" immediate="true"
+				ajax="true" action="#{videoController.deleteVideos}">
+				<f:ajax execute="videosDataTable" render="form"></f:ajax>
+				<p:confirm header="Confirmation"
+					message="Are you sure, You want to delete this Record?"
+					icon="ui-icon-alert" />
+			</p:commandButton>
+
+			<br />
+			<br />
+
+
+			<ui:include src="/common/CommonDialog.xhtml" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

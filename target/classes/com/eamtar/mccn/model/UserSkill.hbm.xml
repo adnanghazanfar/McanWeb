@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserSkill" table="user_skill"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="userSkillId">
+			<column name="userSkillId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.Integer" name="rating">
+			<column name="rating" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="noOfYears">
+			<column name="noOfYears" length="2" />
+		</property>
+		<property type="java.lang.String" name="customSkill">
+			<column name="customSkill" length="200" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="22" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="22" />
+		</property>
+		<many-to-one name="userProfile" class="com.eamtar.mccn.model.UserProfile"
+			fetch="select">
+			<column name="userId" not-null="true" />
+		</many-to-one>
+		<many-to-one name="skill" class="com.eamtar.mccn.model.Skill"
+			fetch="select" lazy="false">
+			<column name="skillId" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

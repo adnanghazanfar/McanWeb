@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.Video" table="video"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="videoId">
+			<column name="videoId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="title">
+			<column name="title" length="100" />
+		</property>
+		<property type="java.lang.String" name="videoName">
+			<column name="videoName" length="50" />
+		</property>
+		<property type="java.lang.String" name="url">
+			<column name="url" length="250" />
+		</property>
+		<property type="java.lang.String" name="thumbnail">
+			<column name="thumbnail" length="250" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+	</class>
+</hibernate-mapping>

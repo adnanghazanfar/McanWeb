@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="./layout/basicLayout.xhtml">
+
+	<f:metadata>
+		<f:event listener="#{messageController.initializeValuesForFeedback()}"
+			type="preRenderView"></f:event>
+	</f:metadata>
+
+	<ui:define name="content">
+		<br />
+		<br />
+
+		<center>
+			<h:form id="contactusForm">
+
+				<h:panelGrid columns="1"
+					style="width:650px;margin-left: auto;margin-right: auto;">
+
+					<p:growl infoClass="info" errorClass="error" showSummary="true"
+						id="messages">
+						<p:effect type="pulsate" event="load" delay="1000">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
+					</p:growl>
+
+
+					<p:fieldset legend="Contact Us">
+
+						<h:panelGrid columns="1" styleClass="eamtarRegistration">
+							<h:outputLabel styleClass="oH1Huge" value="Contact Form!"></h:outputLabel>
+							<h:outputLabel
+								value="Do you have feedback or need assistance?"></h:outputLabel>
+							<h:outputLabel
+								value="Fill the form below keenly and we will get back to you soon. "></h:outputLabel>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1" styleClass="eamtarRegistration"
+							id="giTable">
+							<p:inputText label="Name" id="name" maxlength="50"
+								value="#{messageBean.selectedMessageFeedback.name}"
+								required="true">
+								<f:validateLength minimum="3" maximum="50" />
+							</p:inputText>
+							<p:inputText label="Email Address" id="email" maxlength="40"
+								value="#{messageBean.selectedMessageFeedback.email}"
+								required="true">
+								<f:validator validatorId="emailValidator"></f:validator>
+								<f:ajax event="change" execute="email" render="messages" />
+							</p:inputText>
+							<p:inputText label="Subject" id="subject" maxlength="50"
+								value="#{messageBean.selectedMessageFeedback.subject}">
+								<f:validateLength minimum="3" maximum="50" />
+							</p:inputText>
+							<p:inputTextarea label="Message" id="messageBody" style="width:400px;height:80px;"
+								value="#{messageBean.selectedMessageFeedback.messageBody}"
+								required="true">
+								<f:validateLength minimum="5" maximum="300" />
+							</p:inputTextarea>
+
+							<p:commandButton id="saveButton" value="Submit"
+								update="contactusForm"
+								action="#{messageController.sendMessageFeedback}" />
+
+							<p:watermark value="Name" for="name" />
+							<p:watermark value="Subject" for="subject" />
+							<p:watermark value="Email Address" for="email" />
+							<p:watermark value="Write your message ..." for="messageBody" />
+						</h:panelGrid>
+
+
+					</p:fieldset>
+
+				</h:panelGrid>
+
+			</h:form>
+		</center>
+		<br />
+		<br />
+
+	</ui:define>
+</ui:composition>

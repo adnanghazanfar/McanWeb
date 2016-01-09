@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="./layout/basicLayout.xhtml">
+
+
+	<ui:define name="content">
+
+		<br />
+		<br />
+
+		<f:metadata>
+			<f:event listener="#{userController.generateResponseMessage}"
+				type="preRenderView" />
+		</f:metadata>
+
+		<center>
+			<h:form id="loginform">
+
+				<h:panelGrid columns="1"
+					style="width:650px;margin-left: auto;margin-right: auto;">
+
+					<p:growl infoClass="info" errorClass="error" showSummary="true"
+						id="messages">
+						<p:effect type="pulsate" event="load" delay="1000">
+							<f:param name="mode" value="'show'" />
+						</p:effect>
+					</p:growl>
+
+
+					<p:fieldset legend="Login to MCAN">
+
+						<h:panelGrid columns="1" styleClass="eamtarRegistration">
+							<h:outputLabel styleClass="oH1Huge" value="Welcome!"></h:outputLabel>
+							<h:outputLabel
+								value="Signin to Medical Career Advising Network, Please provide your email and password."></h:outputLabel>
+							<h:outputLabel
+								value="If you don't have any account, press signup and register to our application."></h:outputLabel>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1" styleClass="eamtarRegistration"
+							id="giTable">
+
+							<c:if
+								test="#{userBean==null or userBean.user.emailAddress == null or userBean.user.password == null}">
+
+								<p:inputText label="Email" id="email" value="#{userBean.email}"
+									required="true">
+									<f:validator validatorId="emailValidator"></f:validator>
+								</p:inputText>
+
+								<p:password label="Password" id="password"
+									value="#{userBean.password}" required="true" />
+								<f:verbatim></f:verbatim>
+
+								<h:panelGroup>
+									<p:commandButton value="Login" style="margin:0;" ajax="false"
+										action="#{userController.doLogin}" />
+									<p:button value="Sign Up" style="margin:0;" ajax="true"
+										outcome="register" />
+								</h:panelGroup>
+								
+								<f:verbatim></f:verbatim>
+								<h:link value="Forgot Password" style="font-size: 0.75em;"
+									outcome="/forgotPassword.xhtml"></h:link>
+
+								<p:watermark value="Email Address" for="email" />
+								<p:watermark value="Password:" for="password" />
+
+							</c:if>
+							<c:if
+								test="#{userBean!=null and userBean.user.emailAddress != null and userBean.user.password != null}">
+								<p:inputText label="Email" id="email" value="#{userBean.email}"
+									readonly="true" required="true">
+								</p:inputText>
+
+								<p:password label="Password" id="password" readonly="true"
+									redisplay="true" value="#{userBean.password}" />
+								<f:verbatim></f:verbatim>
+								<h:panelGroup>
+									<p:commandButton value="Logout" style="margin:0;" ajax="false"
+										action="#{userController.doLogout}" />
+									<p:button rendered="#{userBean.userType == 1}" value="Home"
+										style="margin:0;" ajax="true"
+										outcome="/physician/profile.xhtml" />
+								</h:panelGroup>
+							</c:if>
+							
+							<f:verbatim></f:verbatim>
+							<f:verbatim></f:verbatim>
+
+						</h:panelGrid>
+						
+					</p:fieldset>
+
+				</h:panelGrid>
+
+			</h:form>
+		</center>
+		<br />
+		<br />
+
+	</ui:define>
+
+</ui:composition>

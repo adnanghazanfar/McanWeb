@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.Message" table="message"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="messageId">
+			<column name="messageId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="subject">
+			<column name="subject" length="50" />
+		</property>
+		<property type="java.lang.String" name="messageBody">
+			<column name="messageBody" length="1000" />
+		</property>
+		<property type="java.lang.Integer" name="receiverStatus">
+			<column name="receiverStatus" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="messageStatus">
+			<column name="messageStatus" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="senderStatus">
+			<column name="senderStatus" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="parentId">
+			<column name="parentId" length="2" />
+		</property>
+		<property type="java.util.Date" name="sentOn">
+			<column name="sentOn" length="12" />
+		</property>
+		<property type="java.util.Date" name="viewedOn">
+			<column name="viewedOn" length="12" />
+		</property>
+		<property type="java.util.Date" name="updatedOn">
+			<column name="updatedOn" length="12" />
+		</property>
+
+		<many-to-one name="sender" class="com.eamtar.mccn.model.User"
+			fetch="join" lazy="false">
+			<column name="senderId" not-null="true" />
+		</many-to-one>
+		<many-to-one name="receiver" class="com.eamtar.mccn.model.User"
+			fetch="join" lazy="false">
+			<column name="receiverId" not-null="true" />
+		</many-to-one>
+		<set name="replies" table="message" inverse="true" lazy="false"
+			order-by="sentOn asc" fetch="select">
+			<key>
+				<column name="parentId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.Message" />
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Hibernate session factory -->
+
+	<bean id="mySqlSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<bean id="dataSource"
+				class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+				<property name="url">
+					<value>${jdbc.url}</value>
+				</property>
+				<property name="username">
+					<value>${jdbc.username}</value>
+				</property>
+				<property name="password">
+					<value>${jdbc.password}</value>
+				</property>
+			</bean>
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>com/eamtar/mccn/model/User.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserProfile.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserAddress.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserAcademic.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserExperience.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserSkill.hbm.xml</value>
+				<value>com/eamtar/mccn/model/UserClinicalQualification.hbm.xml</value>
+				<value>com/eamtar/mccn/model/Location.hbm.xml</value>
+				<value>com/eamtar/mccn/model/Skill.hbm.xml</value>
+				<value>com/eamtar/mccn/model/Specialty.hbm.xml</value>
+				<value>com/eamtar/mccn/model/Message.hbm.xml</value>
+				<value>com/eamtar/mccn/model/MessageFeedback.hbm.xml</value>
+				<value>com/eamtar/mccn/model/Video.hbm.xml</value>
+			</list>
+		</property>
+
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.generate_statistics">false</prop>
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<prop key="hibernate.connection.zeroDateTimeBehavior">convertToNull</prop>
+			</props>
+		</property>
+
+	</bean>
+</beans>

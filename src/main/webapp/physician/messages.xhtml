@@ -1,0 +1,342 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template=".././layout/basicPhysicianLayout.xhtml">
+
+	<c:if test="${not empty param.viewType}">
+		<f:metadata>
+			<f:event listener="#{messageController.initializeValues()}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</c:if>
+
+	<ui:define name="content">
+
+		<p:growl infoClass="info" errorClass="error" showSummary="true"
+			showDetail="true" id="messages">
+			<p:effect type="pulsate" event="load" delay="1000">
+				<f:param name="mode" value="'show'" />
+			</p:effect>
+		</p:growl>
+
+		<div id="left">
+			<p:menu>
+				<p:submenu label="Message Menu">
+					<p:separator />
+					<p:menuitem icon="ui-icon-comment" value="Compose"
+						url="/physician/messages.xhtml?viewType=COMPOSE" />
+					<p:menuitem value="Inbox" icon="ui-icon-mail-open"
+						url="/physician/messages.xhtml?viewType=INBOX" />
+					<p:menuitem value="Sent" icon="ui-icon-mail-closed"
+						url="/physician/messages.xhtml?viewType=OUTBOX" />
+					<p:menuitem value="Deleted" icon="ui-icon-trash"
+						url="/physician/messages.xhtml?viewType=DELETED" />
+					<p:separator />
+				</p:submenu>
+			</p:menu>
+
+		</div>
+		<div id="left_content" class="left_content">
+			<p:panel id="composeMessageDialog"
+				rendered="#{messageBean.viewType eq 'COMPOSE'}">
+
+				<h:form id="SendMessageForm">
+
+					<h:panelGrid columns="2" styleClass="messagePanel"
+						id="SendMessagePanel">
+
+						<h:outputLabel value="To : " for="messageReceiver" />
+						<p:autoComplete id="messageReceiver" var="user" label="Message To"
+							style="width:180px" forceSelection="true" required="true"
+							converter="userConverter" itemValue="#{user}"
+							itemLabel="#{user.firstNameFirst}"
+							value="#{messageBean.selectedMessage.receiver}"
+							completeMethod="#{messageController.selectSender}" />
+
+						<h:outputLabel value="Subject " for="subjectMessage" />
+						<p:inputText id="subjectMessage" maxlength="100" required="true"
+							label="Subject" value="#{messageBean.selectedMessage.subject}">
+							<f:validateLength minimum="2" maximum="100" />
+						</p:inputText>
+
+						<h:outputLabel for="messageBody" value="Message Body" />
+						<p:inputTextarea style="width: 375px;" label="Message"
+							value="#{messageBean.selectedMessage.messageBody}"
+							required="true" requiredMessage="Message body is required"
+							id="messageBody" rows="5" cols="30" counter="display"
+							maxlength="1000" counterTemplate="{0} characters remaining." />
+						<f:verbatim />
+						<h:outputText id="display" />
+						<f:verbatim />
+
+						<f:verbatim />
+						<f:verbatim />
+
+						<h:panelGroup>
+							<p:commandButton value="Send"
+								update="@([id$=messages],[id$=SendMessagePanel])"
+								action="#{messageController.sendMessage}">
+							</p:commandButton>
+							<p:commandButton value="Cancel" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>
+			</p:panel>
+
+
+			<h:panelGroup header="Message Module" id="InboxMessagePanel"
+				rendered="#{messageBean.viewType eq 'INBOX'}">
+				<h:form id="inboxForm">
+
+					<p:dataTable id="inboxDataTable" var="messageDTO"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10" paginatorPosition="bottom"
+						paginator="true"
+						rowStyleClass="#{messageDTO.message.messageStatus == 0 ? 'unreadMails' : null}"
+						value="#{messageBean.messageDTOs}" selectionMode="single"
+						selection="#{messageBean.selectedMessageDTO}"
+						rowKey="#{messageDTO.messageId}">
+
+						<f:facet name="header">View Inbox</f:facet>
+
+						<p:ajax event="rowSelect"
+							listener="#{messageController.onRowSelect}"
+							update="@([id$=InboxMessageRepliesPanel])" />
+
+						<p:column headerText="From" style="width:25%;">
+							
+							<h:outputText value="#{messageDTO.message.sender.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId ne userBean.userId}"></h:outputText>
+							<h:outputText value="#{messageDTO.message.receiver.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId eq userBean.userId}"></h:outputText>
+							
+						</p:column>
+						<p:column headerText="Subject" style="width:40%;">
+							#{messageDTO.message.subject}
+						</p:column>
+						<p:column headerText="Sent On" style="width:22%;">
+							#{messageController.convertToDate(messageDTO.message.sentOn)}
+						</p:column>
+					</p:dataTable>
+				</h:form>
+
+				<br />
+
+				<p:panel id="InboxMessageRepliesPanel">
+
+					<p:outputLabel value="No Message Selected"
+						rendered="#{messageBean.selectedMessageDTO==null}"></p:outputLabel>
+					<p:dataGrid id="messageRepliesDataTable" var="message"
+						rowIndexVar="rowIndex"
+						rendered="#{messageBean.selectedMessageDTO!=null}"
+						value="#{messageBean.selectedMessageDTO.replies}" columns="1"
+						rowKey="#{message.messageId}">
+
+						<f:facet name="header">
+							<h:panelGrid columns="2" styleClass="eamtarMessagesHeader">
+								<p:outputLabel
+									value="#{messageBean.selectedMessageDTO.message.subject}"></p:outputLabel>
+								<p:commandButton icon="ui-icon-trash"
+									update="@([id$=InboxMessagePanel],[id$=messages],[id$=MessageRepliesPanel])"
+									actionListener="#{messageController.deleteMessage(messageBean.selectedMessageDTO)}">
+									<p:confirm header="Confirmation"
+										message="Are you sure, You want to delete this Message?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</h:panelGrid>
+						</f:facet>
+
+
+						<p:panel
+							styleClass="marginContentDiv #{message.receiver.userId eq userBean.userId ? 'first-row' : 'second-row'}">
+
+							<p:outputLabel value="#{message.messageBody}" />
+							<hr />
+							<p:outputLabel value="#{message.sender.firstNameFirst} : " />
+							<p:outputLabel
+								value="#{messageController.convertToDate(message.sentOn)}" />
+						</p:panel>
+
+						<!-- #{((rowIndex+1) mod 2) eq 0 ? 'first-row' : 'second-row'} -->
+						<p:panel styleClass="marginContentDiv third-row"
+							rendered="#{(rowIndex eq messageBean.selectedMessageDTO.replies.size()-1)}">
+							<h:form>
+								<h:panelGrid columns="1" cellpadding="2"
+									style="margin-left: 55px;">
+
+									<p:inputTextarea label="Reply Message" id="replyMessage"
+										value="#{messageBean.replyMessage}" maxlength="1000"
+										style="width: 500px;height: 60px;">
+										<f:validateLength minimum="1" maximum="1000"></f:validateLength>
+									</p:inputTextarea>
+
+									<f:facet name="footer">
+										<p:commandButton style="height:25px;" value="Send"
+											update="@([id$=messages],[id$=InboxMessageRepliesPanel])"
+											action="#{messageController.sendReplyMessage}"
+											id="ReplyMessageBtn">
+											<f:setPropertyActionListener
+												target="#{messageBean.selectedMessage}" value="#{message}"></f:setPropertyActionListener>
+										</p:commandButton>
+									</f:facet>
+
+								</h:panelGrid>
+							</h:form>
+						</p:panel>
+
+
+
+					</p:dataGrid>
+				</p:panel>
+
+
+			</h:panelGroup>
+
+			<h:panelGroup header="Message Module" id="OutboxPanel"
+				rendered="#{messageBean.viewType eq 'OUTBOX'}">
+				<h:form id="outboxForm">
+
+					<p:dataTable id="outboxDataTable" var="messageDTO"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10" paginatorPosition="bottom"
+						paginator="true" value="#{messageBean.messageDTOs}"
+						selectionMode="single"
+						selection="#{messageBean.selectedMessageDTO}"
+						rowKey="#{messageDTO.messageId}">
+
+						<f:facet name="header">Sent Messages</f:facet>
+
+						<p:ajax event="rowSelect"
+							update="@([id$=OutboxMessageRepliesPanel])" />
+						<p:column headerText="To" style="width:25%;">
+							<h:outputText value="#{messageDTO.message.sender.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId ne userBean.userId}"></h:outputText>
+							<h:outputText value="#{messageDTO.message.receiver.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId eq userBean.userId}"></h:outputText>
+						</p:column>
+						<p:column headerText="Subject" style="width:40%;">
+							#{messageDTO.message.subject}
+						</p:column>
+						<p:column headerText="Sent On" style="width:22%;">
+							#{messageController.convertToDate(messageDTO.message.sentOn)}
+						</p:column>
+					</p:dataTable>
+
+					<br />
+
+					<p:panel id="OutboxMessageRepliesPanel">
+
+						<p:outputLabel value="No Message Selected"
+							rendered="#{messageBean.selectedMessageDTO==null}"></p:outputLabel>
+						<p:dataGrid id="messageRepliesDataTable" var="message"
+							rowIndexVar="rowIndex"
+							rendered="#{messageBean.selectedMessageDTO!=null}"
+							value="#{messageBean.selectedMessageDTO.replies}" columns="1"
+							rowKey="#{message.messageId}">
+
+							<f:facet name="header">
+								<h:panelGrid columns="3" styleClass="eamtarMessagesHeader">
+									<p:outputLabel
+										value="#{messageBean.selectedMessageDTO.message.subject}"></p:outputLabel>
+									<p:commandButton icon="ui-icon-comment"
+										update="@([id$=InboxMessagePanel])"
+										oncomplete="PF('replyMessageDialog').show()">
+										<f:setPropertyActionListener
+											value="#{messageBean.selectedMessageDTO.message}"
+											target="#{messageBean.selectedMessage}" />
+									</p:commandButton>
+									<p:commandButton icon="ui-icon-trash"
+										update="@([id$=InboxMessagePanel],[id$=messages],[id$=MessageRepliesPanel])"
+										actionListener="#{messageController.deleteMessage(messageBean.selectedMessageDTO)}">
+										<p:confirm header="Confirmation"
+											message="Are you sure, You want to delete this Message?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+								</h:panelGrid>
+							</f:facet>
+
+							<p:panel
+								styleClass="marginContentDiv #{(rowIndex mod 2) eq 0 ? 'first-row' : 'second-row'}">
+
+								<p:outputLabel value="#{message.messageBody}" />
+								<hr />
+								<p:outputLabel value="#{message.sender.firstNameFirst} : " />
+								<p:outputLabel
+									value="#{messageController.convertToDate(message.sentOn)}" />
+
+							</p:panel>
+
+						</p:dataGrid>
+					</p:panel>
+
+				</h:form>
+
+				<div class="cleaner"></div>
+			</h:panelGroup>
+
+			<h:panelGroup header="DELETED MESSAGE" id="DeletedmailPanel"
+				rendered="#{messageBean.viewType eq 'DELETED'}">
+				<h:form id="deletedmailForm">
+
+					<p:dataTable id="deletedMailDataTable" var="messageDTO"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10" paginatorPosition="bottom"
+						paginator="true" value="#{messageBean.messageDTOs}"
+						selectionMode="single"
+						selection="#{messageBean.selectedMessageDTO}"
+						rowKey="#{messageDTO.messageId}">
+
+						<f:facet name="header">Deleted Messages</f:facet>
+
+						<p:column headerText="From" style="width:25%;">
+							<h:outputText value="#{messageDTO.message.sender.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId ne userBean.userId}"></h:outputText>
+							<h:outputText value="#{messageDTO.message.receiver.firstNameFirst}"
+								rendered="#{messageDTO.message.sender.userId eq userBean.userId}"></h:outputText>
+						</p:column>
+						<p:column headerText="Subject" style="width:40%;">
+							#{messageDTO.message.subject}
+						</p:column>
+						<p:column headerText="Sent On" style="width:22%;">
+							#{messageController.convertToDate(messageDTO.message.sentOn)}
+						</p:column>
+					</p:dataTable>
+
+				</h:form>
+
+				<div class="cleaner"></div>
+			</h:panelGroup>
+		</div>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage value="#{resource['images:loader-square.gif']}" />
+		</p:dialog>
+
+
+		<!-- DIALOGS USED FOR ADDITION AND UPDATION AND DELETION OF DATA -->
+
+
+		<ui:include src="/common/ReplyMessageDialog.xhtml" />
+		<ui:include src="/common/CommonDialog.xhtml" />
+
+	</ui:define>
+
+
+</ui:composition>

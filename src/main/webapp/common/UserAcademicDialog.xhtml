@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="AcademicDialogForm">
+		<p:dialog header="Academic Qualification" widgetVar="academicDialog"
+			style="overflow: none;" modal="true" id="academicDialog"
+			resizable="false" height="465" width="545">
+
+			<h:panelGrid columns="1" cellpadding="4"
+				styleClass="eamtarOneColumnDialog"
+				rendered="#{userProfileBean.selectedUserAcademic!=null}"
+				id="AcademicDetail">
+
+				<p:outputLabel value="Education:*" />
+				<p:selectOneMenu id="education" style="height: 27px;width: 190px;"
+					effect="fade" filter="true" filterMatchMode="startsWith"
+					required="true" label="Education"
+					value="#{userProfileBean.selectedUserAcademic.academicTitle}">
+					<f:selectItem></f:selectItem>
+					<f:selectItems value="#{commonBean.academicTitleList}"
+						var="academicTitle" itemLabel="#{academicTitle}"
+						itemValue="#{academicTitle}" />
+					<f:ajax execute="education" event="change"
+						render="instituteLabel institute yearLabel descriptionLabel" />
+				</p:selectOneMenu>
+
+				<p:outputLabel id="instituteLabel"
+					value="#{userProfileBean.instituteLabel}" />
+				<h:panelGroup id="institute">
+					<p:inputText label="Institue"
+						rendered="#{userProfileBean.selectedUserAcademic.academicTitle ne 'Medical School'}"
+						id="instituteInputField" maxlength="100"
+						value="#{userProfileBean.selectedUserAcademic.instituteName}"
+						required="true">
+						<f:validateLength minimum="3" maximum="100" />
+					</p:inputText>
+					<h:panelGrid
+						rendered="#{userProfileBean.selectedUserAcademic.academicTitle eq 'Medical School'}">
+
+						<p:selectOneMenu id="medicalSchoolDropDown"
+							style="height: 27px;width: 190px;" label="Institue"
+							required="true" value="#{userProfileBean.medicalSchool}">
+							<f:selectItem itemLabel="Egyptian Medical School" itemValue="EMS" />
+							<f:selectItem itemLabel="Non-Egyptian Medical School"
+								itemValue="NEMS" />
+							<f:ajax execute="medicalSchoolDropDown" event="change"
+								render="medicalSchoolPanel" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Medical School:*"></p:outputLabel>
+						<h:panelGroup id="medicalSchoolPanel">
+							<p:selectOneMenu id="instituteDropDown"
+								style="height: 27px;width: 190px;" label="Institue"
+								rendered="#{userProfileBean.medicalSchool eq 'EMS'}"
+								effect="fade" filter="true" filterMatchMode="startsWith"
+								required="true"
+								value="#{userProfileBean.selectedUserAcademic.instituteName}">
+								<f:selectItem />
+								<f:selectItems value="#{commonBean.topInstitueList}"
+									var="#{institute}" itemLabel="#{institute}"
+									itemValue="#{institute}" />
+							</p:selectOneMenu>
+
+							<p:inputText label="Institue" style="margin-top:-3px;"
+								rendered="#{userProfileBean.medicalSchool eq 'NEMS'}"
+								id="medicalSchoolInputField" maxlength="100"
+								value="#{userProfileBean.selectedUserAcademic.instituteName}"
+								required="true">
+								<f:validateLength minimum="3" maximum="100" />
+							</p:inputText>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGroup>
+
+				<p:outputLabel value="#{userProfileBean.yearLabel}" id="yearLabel" />
+				<p:selectOneMenu id="coutries" style="height: 27px;width: 190px;"
+					required="true" effect="fade" filter="true"
+					filterMatchMode="startsWith" label="Year Completed"
+					value="#{userProfileBean.selectedUserAcademic.yearCompleted}">
+					<f:selectItem itemLabel="Year"></f:selectItem>
+					<f:selectItems value="#{commonBean.nextTenYearList}" var="year"
+						itemLabel="#{year}" itemValue="#{year}" />
+					<f:selectItems value="#{commonBean.lastHunderdYearList}" var="year"
+						itemLabel="#{year}" itemValue="#{year}" />
+				</p:selectOneMenu>
+
+				<!-- <p:outputLabel value="Is this degree a previous or current one ? :*" />
+				<p:selectOneRadio id="session"
+					value="#{userProfileBean.selectedUserAcademic.isCurrent}">
+					<f:selectItem itemLabel="Current" itemValue="true" />
+					<f:selectItem itemLabel="Previous" itemValue="false" />
+				</p:selectOneRadio> -->
+
+				<p:outputLabel id="descriptionLabel"
+					value="#{userProfileBean.descriptionLabel}" />
+				<p:inputTextarea label="Description" id="academicDescription"
+					maxlength="500" style="width: 400px;"
+					value="#{userProfileBean.selectedUserAcademic.academicDescription}">
+				</p:inputTextarea>
+
+				<br />
+
+
+				<f:facet name="footer">
+					<p:commandButton style="height:25px;" value="Save"
+						id="updateAcademicBtn"
+						update="@([id$=AcademicPanel],[id$=AcademicDetail],[id$=messages])"
+						action="#{userProfileController.saveOrUpdateUserAcademic}" />
+					<h:outputLabel
+						style="color:red;font-size:14;font-weight:bold;margin-top:5px;"
+						value="Allows multiple entries, click save after each entry."></h:outputLabel>
+				</f:facet>
+			</h:panelGrid>
+
+		</p:dialog>
+	</h:form>
+
+</h:body>
+
+</html>

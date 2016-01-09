@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserProfile" table="user_profile"
+		dynamic-insert="true" dynamic-update="true">
+		<id name="userId" type="java.lang.Integer">
+			<column name="userId" precision="22" scale="0" />
+			<generator class="foreign">
+				<param name="property">user</param>
+			</generator>
+		</id>
+		<one-to-one name="user" class="com.eamtar.mccn.model.User"
+			fetch="select" />
+		<property type="java.lang.String" name="summary">
+			<column name="summary" length="200" />
+		</property>
+		<property type="java.lang.String" name="description">
+			<column name="description" length="1000" />
+		</property>
+		<property type="java.lang.Integer" name="profileRating">
+			<column name="profileRating" length="2" />
+		</property>
+		<property type="java.lang.Integer" name="totalExperience">
+			<column name="totalExperience" length="2" />
+		</property>
+		<set name="userAddresses" table="user_address" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="userId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.UserAddress" />
+		</set>
+		<set name="userAcademics" table="user_academic" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="userId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.UserAcademic" />
+		</set>
+		<set name="userExperiences" table="user_experience" inverse="true"
+			lazy="true" fetch="select">
+			<key>
+				<column name="userId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.UserExperience" />
+		</set>
+		<set name="userSkills" table="user_skill" inverse="true" lazy="true"
+			fetch="select">
+			<key>
+				<column name="userId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.UserSkill" />
+		</set>
+		<set name="userClinicalQualifications" table="user_clinical_qualification"
+			inverse="true" lazy="true" fetch="select">
+			<key>
+				<column name="userId" not-null="false" />
+			</key>
+			<one-to-many class="com.eamtar.mccn.model.UserClinicalQualification" />
+		</set>
+	</class>
+</hibernate-mapping>

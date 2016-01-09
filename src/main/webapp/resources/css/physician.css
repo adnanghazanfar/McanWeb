@@ -1,0 +1,517 @@
+/*
+* This CSS class is used for 
+* css designing on physician pages  any change here will reflect directly to
+* to physician pages nothing else 
+*/
+
+
+
+/*
+*  DIALOGS DESIGNING
+*  START
+*/
+
+.eamtarDialog {
+	margin-left:75px;
+	margin-top:10px;
+	width: 400px;"
+}
+
+.eamtarDialog tr>td:first-child {
+	font-weight: bold;
+	width: 150px;
+	padding: 2px;
+} /* first column */
+
+.eamtarDialog tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+
+.eamtarDialog .ui-inputfield {
+    padding: 4px;
+    width: 180px;
+}
+.eamtarDialog .ui-widget {
+	height: 20px;
+    font-size: 12px;
+    width: 20px;
+}
+
+.eamtarDialog .ui-outputlabel {
+	margin-top:10px;
+	font-size: 13px;
+	font-weight: bold;
+	width: 150px;
+}
+
+.eamtarDialog .ui-inputfield {
+	margin-top:10px;
+	padding: 4px;
+	width: 180px;
+}
+
+.eamtarDialog .ui-button {
+	width: 90px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarDialog INPUT[type="radio"] {
+	margin-top:10px;
+	width: 60px;
+	height: 2em;
+}
+
+.eamtarDialog .ui-selectonemenu{
+    margin-top:10px;
+}
+
+.eamtarDialog .ui-selectonemenu label.ui-selectonemenu-label {
+    cursor: pointer;
+    margin-top: 0px;
+    line-height: 24px;
+}
+
+
+.eamtarDialog .dateField .ui-inputfield {
+    width: 85px;
+}
+
+
+.profileOneRowPanel {
+	width: 100%;
+}
+
+.profileOneRowPanel tr>td:first-child {
+	font-weight: bold;
+	width:500px;
+	padding-top: 3px;
+} 
+
+
+
+.oneRowDataGridPanel {
+	width: 100%;
+}
+
+.oneRowDataGridPanel tr>td:first-child {
+	font-weight: bold;
+	width:175px;
+	padding-top: 3px;
+} 
+
+.eamtarOneColumnDialog {
+	margin-left:75px;
+	margin-top:10px;
+	width: 400px;"
+}
+
+.eamtarOneColumnDialog tr>td:first-child {
+	/*width: 350px;
+	padding: 2px;*/
+} /* first column */
+
+.eamtarOneColumnDialog tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+        
+.eamtarOneColumnDialog .ui-inputfield {
+    padding: 4px;
+    width: 180px;
+}
+.eamtarOneColumnDialog .ui-widget {
+    font-size: 12px;
+    width: 20px;
+}
+
+.eamtarOneColumnDialog .ui-outputlabel {
+	margin-top:10px;
+	margin-bottom:5px;
+	width: 400px;
+	font-size: 0.81rem;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.eamtarOneColumnDialog .ui-inputfield {
+	margin-top:0px;
+	padding: 4px;
+	width: 180px;
+}
+
+.eamtarOneColumnDialog .ui-button {
+	width: 90px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarOneColumnDialog INPUT[type="radio"] {
+	margin-top:0px;
+	width: 60px;
+	height: 2em;
+}
+
+.eamtarOneColumnDialog .ui-selectonemenu{
+    margin-top:0px;
+}
+
+.eamtarOneColumnDialog .ui-selectonemenu label.ui-selectonemenu-label {
+    cursor: pointer;
+    margin-top: 0px;
+    line-height: 19px;
+}
+
+.eamtarOneColumnDialog .dateField .ui-inputfield {
+    width: 85px;
+}
+
+.eamtarOneColumnDialog .ui-selectmanycheckbox label, .ui-selectoneradio label {
+    display: block;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: 4px;
+    width: 60px;
+}
+
+
+.eamtarGridHeader {
+	width: 100%;"
+	padding: 0px;
+}
+
+.eamtarGridHeader tr>td:first-child {
+	font-weight: bold;
+	width: 545px;
+	padding: 2px;
+} /* first column */
+.eamtarGridHeader tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+
+.eamtarGridHeader .ui-outputlabel {
+	font-size: 13px;
+    font-weight: bold;
+    margin-top: 2px;
+    text-align: left;
+}
+
+
+.userHeader {
+    margin-left: 25px;
+    vertical-align: top;
+    width: 595px;
+}
+
+
+
+.eamtarMessagesHeader {
+	width: 100%;"
+	padding: 0px;
+}
+
+.eamtarMessagesHeader tr>td:first-child {
+	font-weight: bold;
+	width: 645px;
+	padding: 2px;
+} /* first column */
+.eamtarMessagesHeader tr>td:first-child+td { /* color: green;*/
+	width: 25px;
+} /* second column */
+.eamtarMessagesHeader tr>td:first-child+td+td { /* color: green;*/
+	width: 25px;
+} /* third column */
+
+.eamtarMessagesHeader .ui-outputlabel {
+	font-size: 13px;
+    font-weight: bold;
+    margin-top: 2px;
+    text-align: left;
+}
+
+
+/*
+*  DIALOGS DESIGNING
+*  END
+*/
+
+
+
+/*
+*  RIGHT BAR CSS DESIGNING
+*  START
+*/
+
+
+.ui-widget-content a {
+    color: steelblue;
+}
+
+
+.userMoreMainInfo {
+	width: 240px;
+	margin-left: 0px;
+	vertical-align: top;
+	margin-top: 20px;
+}
+
+.userMoreMainInfo tr>td:first-child {
+	padding: 2px;
+	text-align: center;
+} /* first column */
+
+.userMoreMainInfo tr>td:first-child+td { 
+	vertical-align: top;
+	text-align: left;
+}/* color: green;*/
+
+
+
+/*
+*  RIGHT BAR CSS DESIGNING
+*  END
+*/
+
+
+
+
+/*
+*  MESSAGES CSS DESIGNING
+*  START
+*/
+
+
+.messagePanel {
+	width: 400px;
+	margin-left: 25px;
+	margin-top : 20px;
+	vertical-align: top;
+}
+
+.messagePanel tr>td:first-child {
+	font-weight: bold;
+	padding: 10px;
+} /* first column */
+
+.messagePanel tr>td:first-child label{
+	font-weight: bold;
+	width:100px;
+}
+
+.radioButtonPanel {
+	margin-left: 0px;
+	margin-top : 0px;
+	vertical-align: top;
+}
+
+.radioButtonPanel tr>td:first-child {
+	padding: 0px;
+} /* first column */
+
+.radioButtonPanel tr>td:first-child label{
+	font-weight: bold;
+}
+
+.messageDetailPanel {
+	 width: 100%;
+}
+
+.messageDetailPanel tr>td:first-child {
+	padding: 5px;
+}
+
+.messageDetailPanel .ui-outputlabel {
+	margin-left: 20px;
+	margin-right: 20px;
+	text-align: justify;
+}
+
+
+.unreadMails {
+	background-color: #b7ef49 !important;
+	background-image: none !important;
+	color: RED !important;
+}
+
+.unreadMails .ui-outputlabel {
+	font-weight: bold;
+}
+
+/*
+*  MESSAGES CSS DESIGNING
+*  END
+*/
+
+
+.userMoreInfo {
+	width: 240px;
+	margin-left: 5px;
+	vertical-align: top;
+}
+
+.userMoreInfo tr>td:first-child {
+	padding: 2px;
+	width : 120px;
+	text-align: center;
+} /* first column */
+
+.userMoreInfo tr>td:first-child+td { 
+	text-align: left;
+	vertical-align: top;
+}/* color: green;*/
+
+
+/*
+* SEARCH
+*/
+
+.searchResults .ui-datagrid-data{
+	width: 0;
+}
+
+.searchResults .ui-outputlabel{
+	color: #555;
+    cursor: pointer;
+    display: block;
+    font-size: 0.875em;
+    font-weight: 500;
+    margin-bottom: 0.1875em;
+}
+
+
+.quickViewProfile {
+	width: 100%;
+}
+
+.quickViewProfile tr>td:first-child {
+	font-weight: bold;
+	width:150px;
+	padding-bootom: 3px;
+} 
+
+.quickViewProfile {
+	margin-left:75px;
+	margin-top:10px;
+	width: 200px;"
+}
+
+.quickViewProfile tr>td:first-child {
+	width: 200px;
+	padding: 0px;
+} /* first column */
+
+.quickViewProfile tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+        
+.quickViewProfile .ui-widget {
+	height: 20px;
+    font-size: 12px;
+    width: 20px;
+}
+
+.quickViewProfile .ui-outputlabel {
+	margin-bottom:5px;
+	width: 200px;
+	font-size: 0.81rem;
+    font-style: normal;
+    font-weight: lighter;
+}
+
+
+.quickViewHeader {
+    margin-left: 25px;
+    vertical-align: top;
+    width: 510px;
+}
+
+.quickViewUserInfo {
+	width: 490px;
+	margin-left: 25px;
+	vertical-align: top;
+}
+
+.quickViewUserInfo tr>td:first-child {
+	font-weight: bold;
+	padding: 2px;
+	width:160px;
+} /* first column */
+
+.quickViewUserInfo tr>td:first-child .ui-outputlabel{
+	font-weight: bold;
+	width:160px;
+} /* first column */
+
+
+
+/*
+	SEARCH CRITERIA ...
+*/
+.eamtarSearchBar {
+	font-weight: bold;
+	width: 775px;
+	margin-left:65px;
+	margin-top:15px;
+	margin-bottom:15px;
+}
+
+.eamtarSearchBar tr > td:first-child {
+    font-weight: bold;
+    padding: 2px;
+    width: 160px;
+}
+
+.eamtarSearchBar tr>td:first-child+td { /* color: green;*/
+	
+} /* second column */
+
+.eamtarSearchBar tr>td:first-child+td+td { /* color: green;*/
+	margin-left: 60px;
+} /* third column */
+
+
+.eamtarSearchBar tr>td:first-child+td+td .ui-outputlabel {
+	padding: 4px;
+	margin-left: 60px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 160px;
+}
+
+
+.eamtarSearchBar .ui-widget {
+	font-size: 12px;
+	height: 18px;
+	width: 20px;
+}
+
+.eamtarSearchBar .ui-outputlabel {
+	padding: 4px;
+	font-size: 12px;
+	font-weight: bold;
+	width: 160px;
+}
+
+.eamtarSearchBar .ui-inputfield {
+	padding: 4px;
+	width: 180px;
+}
+
+.eamtarSearchBar .ui-button {
+	width: 90px;
+    height: 24px;
+    width: 90px;
+}
+	border-radius: 3px 3px 3px 3px;
+}
+
+.eamtarSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+	line-height: 18px;
+}
+
+.eamtarSearchBar INPUT[type="radio"] {
+	width: 15px;
+	height: 2em;
+}
+
+.eamtarSearchBar .ui-selectonemenu label.ui-selectonemenu-label {
+    cursor: pointer;
+    line-height: 19px;
+}

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    
+     <!-- Managed Bean Used as Model of MVC -->
+     
+     <application>
+		<el-resolver>
+			org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+		<resource-bundle>
+			<base-name>application_param</base-name>
+			<var>applicatonParams</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>master_messages</base-name>
+			<var>messageBundle</var>
+		</resource-bundle>
+	</application>
+
+	<!-- <managed-bean>
+		<managed-bean-name>commonBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.CommonBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>userBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.UserBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>loggedIn</property-name>
+			<value>false</value>
+		</managed-property>
+		<managed-property>
+			<property-name>genders</property-name>
+			<list-entries>
+				<value>Male</value>
+				<value>Female</value>
+			</list-entries>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>userProfileBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.UserProfileBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>registrationBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.RegistrationBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+			<property-name>genders</property-name>
+			<list-entries>
+				<value>Male</value>
+				<value>Female</value>
+			</list-entries>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>manageUserBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.ManageUserBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>fileUploadController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.FileUploadController</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>searchBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.SearchBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>resetPasswordBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.ResetPasswordBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>messageBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.MessageBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>videoBean</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.managedbean.VideoBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	--><!-- Managed Bean Used as Controller of MVC -->
+
+	<!-- <managed-bean>
+		<managed-bean-name>userController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.UserController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>userProfileController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.UserProfileController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>manageUserController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.ManageUserController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>messageController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.MessageController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>searchController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.SearchController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>resetPasswordController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.ResetPasswordController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>videoController</managed-bean-name>
+		<managed-bean-class>com.eamtar.mccn.faces.controller.VideoController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>-->
+
+	<!-- Navigation Rules -->
+
+
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>admin</from-outcome>
+			<to-view-id>/admin/profile.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>physician</from-outcome>
+			<to-view-id>/physician/profile.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>user</from-outcome>
+			<to-view-id>/app.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/physician/search.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewUserProfile</from-outcome>
+			<to-view-id>/physician/viewUserProfile.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+	</navigation-rule>
+	
+
+	<!-- Validators -->
+
+
+	<validator>
+		<validator-id>emailValidator</validator-id>
+		<validator-class>com.eamtar.mccn.faces.validator.EmailValidator</validator-class>
+	</validator>
+	
+	<converter>
+		<converter-id>skillConverter</converter-id>
+		<converter-class>com.eamtar.mccn.faces.converter.SkillConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>specialtyConverter</converter-id>
+		<converter-class>com.eamtar.mccn.faces.converter.SpecialtyConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>userConverter</converter-id>
+		<converter-class>com.eamtar.mccn.faces.converter.UserConverter</converter-class>
+	</converter>
+
+	<converter>
+		<converter-id>emptyToNullConverter</converter-id>
+		<converter-class>com.eamtar.mccn.faces.converter.EmptyToNullConverter</converter-class>
+	</converter>
+
+	<lifecycle>
+		<phase-listener id="nocache">com.eamtar.mccn.util.CacheControlPhaseListener</phase-listener>
+	</lifecycle>
+
+	<application>
+		<el-resolver>com.eamtar.mccn.util.SetToListELResolver</el-resolver>
+	</application>
+
+</faces-config>

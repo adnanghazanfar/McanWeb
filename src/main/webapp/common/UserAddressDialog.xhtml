@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="AddressDialogForm">
+
+		<p:dialog header="Current Location in the US (Address)"
+			widgetVar="addressDialog" modal="true" id="addressDialog"
+			resizable="false" height="265" width="575">
+
+			<h:panelGrid columns="2" cellpadding="4" styleClass="eamtarDialog"
+				id="AddressDetail">
+
+				<p:outputLabel value="Country:*" />
+				<p:selectOneMenu id="coutries" style="height: 27px;width: 190px;"
+					effect="fade" filter="true" filterMatchMode="startsWith" label="Country"
+					value="#{userProfileBean.selectedUserAddress.location.countryName}">
+					<f:selectItems value="#{commonBean.countryList}" var="country"
+						itemLabel="#{country}" itemValue="#{country}" />
+					<f:ajax execute="coutries" event="change" render="states" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="State/Governate:" />
+				<h:panelGroup id="states">
+					<p:inputText
+						rendered="#{userProfileBean.selectedUserAddress.location.countryName ne 'Egypt'
+									and userProfileBean.selectedUserAddress.location.countryName ne 'United States of America'}"
+						id="stateInputField" maxlength="100" label="State"
+						value="#{userProfileBean.selectedUserAddress.location.stateName}">
+						<f:validateLength minimum="3" maximum="100" />
+					</p:inputText>
+					<p:selectOneMenu id="egyptStateDropDown" label="State"
+						style="height: 27px;width: 190px;" effect="fade" filter="true"
+						filterMatchMode="startsWith"
+						rendered="#{userProfileBean.selectedUserAddress.location.countryName eq 'Egypt'}"
+						value="#{userProfileBean.selectedUserAddress.location.stateName}">
+						<f:selectItem></f:selectItem>
+						<f:selectItems value="#{commonBean.egyptStateList}" var="state"
+							itemLabel="#{state}" itemValue="#{state}" />
+					</p:selectOneMenu>
+					<p:selectOneMenu id="usaStateDropDown" label="State"
+						style="height: 27px;width: 190px;" effect="fade" filter="true"
+						filterMatchMode="startsWith"
+						rendered="#{userProfileBean.selectedUserAddress.location.countryName eq 'United States of America'}"
+						value="#{userProfileBean.selectedUserAddress.location.stateName}">
+						<f:selectItem></f:selectItem>
+						<f:selectItems value="#{commonBean.usaStateList}" var="state"
+							itemLabel="#{state}" itemValue="#{state}" />
+					</p:selectOneMenu>
+				</h:panelGroup>
+
+				<p:outputLabel value="City:*" />
+				<p:inputText id="city" maxlength="100" label="City"
+					value="#{userProfileBean.selectedUserAddress.location.cityName}"
+					required="true">
+					<f:validateLength minimum="5" maximum="100" />
+				</p:inputText>
+
+				<p:outputLabel value="Select Any ? :*" />
+				<p:selectOneRadio id="session" label="Session"
+					value="#{userProfileBean.selectedUserAddress.addressType}">
+					<f:selectItems value="#{commonBean.addressTypeList}"
+						var="addressType" itemLabel="#{addressType}"
+						itemValue="#{addressType}" />
+				</p:selectOneRadio>
+
+
+				<!-- 
+				<p:inputText label="State" id="country" maxlength="100"
+					value="#{userProfileBean.selectedUserAddress.location.countryName}"
+					required="true">
+					<f:validateLength minimum="5" maximum="100" />
+				</p:inputText>
+				 -->
+
+				<br />
+
+				<f:facet name="footer">
+					<p:commandButton style="height:25px;" value="Save"
+						id="updateAddressBtn"
+						oncomplete="PF('addressDialog').hide();"
+						update="@([id$=AddressPanel],[id$=AddressDetail],[id$=messages])"
+						action="#{userProfileController.saveOrUpdateUserAddress}" />
+					<h:outputLabel style="color:red;font-size:14;font-weight:bold;margin-top:5px;"
+						value="Allows multiple entries, click save after each entry."></h:outputLabel>	
+				</f:facet>
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="ProfilePictureDialogForm">
+		<p:dialog header="Profile Picture"
+			widgetVar="profilePictureDialog" modal="true" id="profilePictureDialog"
+			resizable="false" height="175" width="665">
+
+			<p:growl id="messagesGrowl" showDetail="true" />
+
+			<h:panelGrid columns="1" style="margin-top:10px">
+				
+				<p:messages infoClass="info" errorClass="error" showSummary="true"
+					id="messages">
+					<p:effect type="pulsate" event="load" delay="1000">
+						<f:param name="mode" value="'show'" />
+					</p:effect>
+				</p:messages>
+				
+				<p:fileUpload style="width:630px;" label="Profile Picture"
+					fileUploadListener="#{fileUploadController.handleFileUpload}"
+					mode="advanced" dragDropSupport="false" update="messagesGrowl :UserProfilePanel"
+					sizeLimit="1000000" fileLimit="5"
+					allowTypes="/(\.|\/)(jpe?g|png|JPE?G|PNG)$/" />
+			</h:panelGrid>
+
+		</p:dialog>
+	</h:form>
+
+</h:body>
+
+</html>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+
+	<h:form id="UserSkillDialogForm">
+
+		<p:dialog header="Can provide career advice in these areas"
+			widgetVar="skillDialog" modal="true" id="skillDialog"
+			resizable="false" height="355" width="545">
+
+			<h:panelGrid columns="1" cellpadding="4"
+				styleClass="eamtarOneColumnDialog"
+				rendered="#{userProfileBean.selectedUserSkill !=null}"
+				id="SkillDetail">
+
+				<p:outputLabel
+					value="Skill you can provide career advise on to applicants :*" />
+				<p:selectOneMenu id="skill" effect="fade" filter="true"
+					filterMatchMode="contains" label="Skill"
+					value="#{userProfileBean.selectedUserSkill.skill}"
+					converter="skillConverter"
+					validator="#{userProfileController.skillDuplicationValidate}"
+					style="height: 27px;width: 190px;">
+					<f:selectItems value="#{commonBean.skillsMap.values()}" var="skill"
+						itemLabel="#{skill.title}" itemValue="#{skill}"></f:selectItems>
+					<f:ajax event="change" execute="skill"
+						render="otherSkill :messages" />
+				</p:selectOneMenu>
+
+				<h:panelGroup id="otherSkill">
+					<p:inputText label="Other Skill"
+						rendered="#{userProfileBean.selectedUserSkill.skill.title  eq 'Other'}"
+						value="#{userProfileBean.selectedUserSkill.customSkill}"
+						validator="#{userProfileController.otherSkillDuplicationValidate}"
+						id="otherSkillInputField" maxlength="100" required="true">
+						<f:validateLength minimum="5" maximum="50" />
+					</p:inputText>
+				</h:panelGroup>
+
+				<p:outputLabel value="How do you rate yourself for this skill:" />
+				<p:rating value="#{userProfileBean.selectedUserSkill.rating}"
+					label="Rating" id="skillRating"></p:rating>
+
+				<p:outputLabel value="No of Years:*" />
+				<p:selectOneMenu label="No of Years"
+					value="#{userProfileBean.selectedUserSkill.noOfYears}"
+					style="height: 27px;width: 190px;">
+					<f:selectItems value="#{commonBean.oneToTenList}" var="number"
+						itemLabel="#{number}" itemValue="#{number}"></f:selectItems>
+				</p:selectOneMenu>
+
+
+				<br />
+
+
+				<f:facet name="footer">
+					<p:commandButton style="height:25px;" value="Save"
+						id="updateSkillBtn"
+						oncomplete="PF('skillDialog').hide();"
+						update="@([id$=UserSkillPanel],[id$=SkillDetail],[id$=messages])"
+						action="#{userProfileController.saveOrUpdateUserSkill}" />
+					<h:outputLabel style="color:red;font-size:14;font-weight:bold;margin-top:5px;"
+						value="Allows multiple entries, click save after each entry."></h:outputLabel>	
+				</f:facet>
+
+			</h:panelGrid>
+
+		</p:dialog>
+
+	</h:form>
+
+</h:body>
+
+</html>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template=".././layout/userLayout.xhtml">
+
+	<c:if test="#{videoBean.intialized}">
+		<f:metadata>
+			<f:event listener="#{videoController.initializeValues()}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</c:if>
+
+	<ui:define name="content">
+
+		<br />
+
+		<h:form id="searchVideosForm">
+			<p:growl id="messagesGrowl" showDetail="true"></p:growl>
+			<p:fieldset legend="Videos Zone">
+
+				<h:panelGrid columns="2" styleClass="videoDetailVertical">
+
+					<p:dataGrid columns="1" rows="10" id="videosTableVertical"
+						var="video" value="#{videoBean.videoList}"
+						styleClass="verticalVideoResultsBar">
+
+						<f:facet name="header">Top Links</f:facet>
+						<h:panelGrid id="userDetail" styleClass="videoDetailVertical">
+							<p:commandLink update="@([id$=videoPlayPanel])" immediate="true"
+								actionListener="#{videoController.loadSelectedVideo(video)}">
+								<p:outputLabel value="#{video.title}" styleClass="title"></p:outputLabel>
+							</p:commandLink>
+							<p:outputLabel
+								value="Posted By: #{videoController.convertToDate(video.createdDate)}"
+								styleClass="postedBy"></p:outputLabel>
+						</h:panelGrid>
+
+					</p:dataGrid>
+
+					<h:panelGroup>
+						<h:panelGrid columns="1" id="videoPlayPanel"
+							styleClass="videoPlaySection">
+							<p:outputLabel value="#{videoBean.selectedVideo.title}"
+								style="font-size: 1.8em;" styleClass="videoTitle"></p:outputLabel>
+							<p:outputLabel
+								value="Posted By: #{videoController.convertToDate(videoBean.selectedVideo.createdDate)}"
+								styleClass="title"></p:outputLabel>
+							<iframe width="600" height="400"
+								src="#{videoBean.selectedVideo.url}"> </iframe>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1" styleClass="videoPlaySection">
+							<h:panelGroup>
+								<p:inputText id="videoInput" effect="fade"
+									value="#{videoBean.searchText}"
+									style="height: 35px;width: 490px;">
+								</p:inputText>
+								<p:commandButton value="Search" style="height:44px;width: 94px;"
+									actionListener="#{videoController.searchVideos}"
+									update="@([id$=videosTable])"></p:commandButton>
+								<p:watermark for="videoInput" value="Text for search .."></p:watermark>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<br />
+				<br />
+				<br />
+
+				<p:dataGrid columns="4" rows="40" paginator="true" id="videosTable"
+					var="video" value="#{videoBean.videoList}"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="20,40,60" styleClass="searchVideoResults">
+
+					<div id="qv_#{video.videoId}"
+						style="height: 0px; display: none; position: relative; top: 55px; margin-left: 85px; cursor: pointer !important;">
+
+						<p:commandLink update="@([id$=videoPlayPanel])" immediate="true"
+							actionListener="#{videoController.loadSelectedVideo(video)}">
+							<h:graphicImage id='qv_img_#{video.videoId}'
+								onmouseover="document.getElementById('qv_#{video.videoId}').style.display='';"
+								onmouseout="document.getElementById('qv_#{video.videoId}').style.display='none';"
+								value="../resources/images/play.png" />
+						</p:commandLink>
+					</div>
+
+					<h:panelGrid id="userDetail" styleClass="videoDetail">
+						<p:graphicImage styleClass="thumbnail"
+							onmouseover="document.getElementById('qv_#{video.videoId}').style.display='';"
+							onmouseout="document.getElementById('qv_#{video.videoId}').style.display='none';"
+							value="#{video.thumbnail}"></p:graphicImage>
+						<p:outputLabel value="#{video.title}" styleClass="title"></p:outputLabel>
+						<p:outputLabel
+							value="Posted By: #{videoController.convertToDate(video.createdDate)}"
+							styleClass="postedBy"></p:outputLabel>
+					</h:panelGrid>
+
+				</p:dataGrid>
+
+			</p:fieldset>
+		</h:form>
+
+		<br />
+		<br />
+
+
+	</ui:define>
+
+</ui:composition>

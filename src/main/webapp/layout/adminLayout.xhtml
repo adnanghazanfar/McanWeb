@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:insert name="title">
+		<title>Medical Career Advising Network</title>
+		<meta name="keywords"
+		content="Medical Career Advising Network, MCAN, MCCN, Medical Career Consuling Network, Medical Career Advising, MCA, Medical Career" />
+	<meta name="description" content="Medical Career Advising Network" />
+	</ui:insert>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
+	<meta name="description" content="website description" />
+	<meta name="keywords" content="website keywords, website keywords" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<link href=".././resources/css/default.css" rel="stylesheet"
+		type="text/css" />
+	<link href=".././resources/css/physician.css" rel="stylesheet"
+		type="text/css" />
+	<link href=".././resources/css/cssLayout.css" rel="stylesheet"
+		type="text/css" />
+	<link href=".././resources/css/topnav.css" rel="stylesheet"
+		type="text/css" />
+	<link href=".././resources/css/app.css" rel="stylesheet"
+		type="text/css" />
+	<link href=".././resources/css/admin.css" rel="stylesheet"
+		type="text/css" />		
+
+</h:head>
+
+<h:body style="background:#E6E6FA;">
+
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="header.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+
+	<div class="center_content" style="background:#E6E6FA;">
+		<div id="content" class="right_content">
+			<br />
+			<ui:insert name="topnav">
+				<ui:include src="/admin/menubar.xhtml" />
+			</ui:insert>
+			<ui:insert name="right_content">Content</ui:insert>
+			<br />
+		</div>
+		<div id="right">
+			<ui:insert name="right">
+				<ui:include src="/admin/rightBar.xhtml" />
+			</ui:insert>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+
+
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="footer.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+</h:body>
+
+</html>

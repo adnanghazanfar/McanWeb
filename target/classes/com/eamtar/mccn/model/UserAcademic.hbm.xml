@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.eamtar.mccn.model.UserAcademic" table="user_academic"
+		dynamic-insert="true" dynamic-update="true">
+		<id type="java.lang.Integer" name="academicId">
+			<column name="academicId" precision="22" scale="0" />
+			<generator class="native" />
+		</id>
+		<property type="java.lang.String" name="academicTitle">
+			<column name="academicTitle" length="100" />
+		</property>
+		<property type="java.lang.String" name="academicDescription">
+			<column name="academicDescription" length="1000" />
+		</property>
+		<property type="java.lang.String" name="instituteName">
+			<column name="instituteName" length="100" />
+		</property>
+		<property type="java.util.Date" name="createdDate">
+			<column name="createdDate" length="12" />
+		</property>
+		<property type="java.util.Date" name="modifiedDate">
+			<column name="modifiedDate" length="12" />
+		</property>
+		<property type="java.lang.Integer" name="yearCompleted">
+			<column name="yearCompleted" length="4" />
+		</property>
+		<property name="isCurrent" type="java.lang.Boolean">
+			<column name="isCurrent" length="2" />
+		</property>
+		<many-to-one name="userProfile" class="com.eamtar.mccn.model.UserProfile"
+			fetch="select">
+			<column name="userId" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>
